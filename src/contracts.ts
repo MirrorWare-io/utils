@@ -2,12 +2,13 @@ import { Contract, Signer, providers } from "ethers";
 import delegateAbi from "./abis/delegateAbi";
 import config from "./config";
 import { delegateTuple } from "./types";
+import { ChainEnum } from "./chains";
 /**
  * Retrieves the contract addresses for the given chainId
  * @param chainId number 1 or 5 or
  * @returns
  */
-export function getCbContractsByChainId(chainId: number) {
+export function getCbContractsByChainId(chainId: number | ChainEnum) {
 	if (chainId == 5) {
 		//goerli
 		return {
@@ -22,6 +23,8 @@ export function getCbContractsByChainId(chainId: number) {
 			mechAddress: "0x0ccef3C248d10a54559684f024Df4c38bF7429e4",
 			mechCrafter: "0x1528d3216a35052683F8dB6990a59778c490f003",
 		};
+	} else if (chainId == ChainEnum.SEPOLIA) {
+		throw new Error("Sepolia chain not supported yet");
 	} else {
 		// eth network by default
 		return {
@@ -63,12 +66,12 @@ export const getContractsByChain = async (signer: Signer) => {
  */
 /**
  * Returns a ethers.Contract instance of the delegate contract
- * Needs
- * @param chainId
- * @returns
+ * Needs a key set in env vars; see documentation
+ * @param chainId number or ChainEnum
+ * @returns ethers.Contract instance
  * @internal
  */
-export function getDelegateContract(chainId: number) {
+export function getDelegateContract(chainId: number | ChainEnum) {
 	const key =
 		config.infura.key || (chainId == 5 ? config.alchemy.goerli_key : config.alchemy.eth_key);
 	if (!key) throw new Error("getDelegateContract: No key found in envs.");
@@ -85,7 +88,7 @@ export function getDelegateContract(chainId: number) {
  * @returns tuple
  * @internal
  */
-export async function getWalletFromDelegate(chainId: number, address: string) {
+export async function getWalletFromDelegate(chainId: number | ChainEnum, address: string) {
 	const contract = getDelegateContract(chainId);
 	let tuples: delegateTuple;
 	try {
