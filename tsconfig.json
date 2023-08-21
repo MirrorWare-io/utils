@@ -1,0 +1,25 @@
+{
+    "compilerOptions": {
+      "lib": ["es2020", "ES2021.String"],
+      "module": "commonjs",
+      "target": "es2019",
+  
+      "esModuleInterop": true,
+      "strict": true /* Enable all strict type-checking options. */,
+      "noImplicitAny": true /* Enable error reporting for expressions and declarations with an implied 'any' type. */,
+    
+      "moduleResolution": "node",
+      "sourceMap": false,
+      "outDir": "dist",
+      "baseUrl": ".",
+  
+      "declaration": true,
+      "allowSyntheticDefaultImports": true,
+      "resolveJsonModule": true,
+  
+      "paths": { "*": ["node_modules/*"] }
+    },
+    "exclude": ["node_modules"],
+    "include": ["*"]
+  }
+  
