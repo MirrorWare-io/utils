@@ -2,8 +2,8 @@
   "name": "@cyberbrokers/eth-utils",
   "version": "0.0.2",
   "description": "",
-  "main": "dist/index.js",
-  "lib": "dist/index.d.ts",
+  "main": "index.js",
+  "lib": "index.d.ts",
   "license": "MIT",
   "type": "commonjs",
   "author": "Cyberbrokers",
@@ -17,9 +17,6 @@
     "deploy": "npm run build && cp package.json dist && cd dist && npm publish"
   },
   "keywords": [],
-  "files": [
-    "dist"
-  ],
   "dependencies": {
     "ethers": "^5.7.2",
     "lodash": "^4.17.21",
