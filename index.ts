@@ -39,6 +39,8 @@ import mechAbi from "./src/abis/mech";
 import mechAssemblerAbi from "./src/abis/mechAssembler";
 import revealedAbi from "./src/abis/revealed";
 import unrevealedAbi from "./src/abis/unrevealedAbi";
+import cyberbrokersAbi from "./src/abis/cyberbrokers";
+import cyberbrokersMetadataAbi from "./src/abis/cyberbrokerMetadata";
 const ABIS = {
 	delegateAbi,
 	afterglowAbi,
@@ -48,6 +50,8 @@ const ABIS = {
 	mechAssemblerAbi,
 	revealedAbi,
 	unrevealedAbi,
+	cyberbrokersAbi,
+	cyberbrokersMetadataAbi,
 };
 export { ABIS };
 
