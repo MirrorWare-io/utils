@@ -1,3 +1,5 @@
+import { BigNumber } from "ethers";
+
 /** Per {@link https://github.com/ethereum/EIPs/blob/master/EIPS/eip-3085.md#parameters EIP-3085} */
 export interface AddEthereumChainParameter {
 	chainId: number;
@@ -11,3 +13,5 @@ export interface AddEthereumChainParameter {
 	blockExplorerUrls?: string[];
 	iconUrls?: string[];
 }
+
+export type delegateTuple = [number, string, string, string, BigNumber][];

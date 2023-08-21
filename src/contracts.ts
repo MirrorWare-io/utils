@@ -1,6 +1,7 @@
 import { Contract, Signer, providers } from "ethers";
 import delegateAbi from "./abis/delegateAbi";
 import config from "./config";
+import { delegateTuple } from "./types";
 /**
  * Retrieves the contract addresses for the given chainId
  * @param chainId number 1 or 5 or
@@ -86,5 +87,14 @@ export function getDelegateContract(chainId: number) {
  */
 export async function getWalletFromDelegate(chainId: number, address: string) {
 	const contract = getDelegateContract(chainId);
-	return await contract.getDelegationsByDelegate(address);
+	let tuples: delegateTuple;
+	try {
+		tuples = await contract.getDelegationsByDelegate(address);
+	} catch (e) {
+		console.debug(e?.toString ? e.toString() : e);
+		return [];
+	}
+
+	// const filtered = tuples.filter((tuple) => tuple[0] == 1) // only get vaults for "DelegateForAll" type
+	return tuples;
 }
