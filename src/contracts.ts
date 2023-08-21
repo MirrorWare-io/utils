@@ -1,10 +1,10 @@
 import { Contract, Signer, providers } from "ethers";
-import delegateAbi from './abis/delegateAbi'
+import delegateAbi from "./abis/delegateAbi";
 import config from "./config";
 /**
  * Retrieves the contract addresses for the given chainId
- * @param chainId number 1 or 5 or 
- * @returns 
+ * @param chainId number 1 or 5 or
+ * @returns
  */
 export function getCbContractsByChainId(chainId: number) {
 	if (chainId == 5) {
@@ -58,24 +58,22 @@ export const getContractsByChain = async (signer: Signer) => {
 
 /**
  * ==================== Delegate cash contract START ====
- * 
+ *
  */
 /**
  * Returns a ethers.Contract instance of the delegate contract
- * Needs 
- * @param chainId 
- * @returns 
+ * Needs
+ * @param chainId
+ * @returns
  * @internal
  */
 export function getDelegateContract(chainId: number) {
-    const key = config.infura.key || (chainId == 5? config.alchemy.goerli_key : config.alchemy.eth_key)
-    if(!key) throw new Error('getDelegateContract: No key found in envs.')
-    const ProviderClass = config.infura.key? providers.InfuraProvider : providers.AlchemyProvider
-    if(!ProviderClass) throw new Error('getDelegateContract: No provider found')
-	const provider = new ProviderClass(
-		chainId,
-		key,
-	);
+	const key =
+		config.infura.key || (chainId == 5 ? config.alchemy.goerli_key : config.alchemy.eth_key);
+	if (!key) throw new Error("getDelegateContract: No key found in envs.");
+	const ProviderClass = config.infura.key ? providers.InfuraProvider : providers.AlchemyProvider;
+	if (!ProviderClass) throw new Error("getDelegateContract: No provider found");
+	const provider = new ProviderClass(chainId, key);
 	const addresses = getCbContractsByChainId(chainId);
 	return new Contract(addresses.delegateAddress, delegateAbi, provider);
 }

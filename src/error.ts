@@ -1,7 +1,6 @@
-
 /**
  * Function that attempts to read an error message from a etherjs error object to display an appropriate error message
- * @param e 
+ * @param e
  * @returns string
  */
 export const web3ExtractErrorMessage = (e: {

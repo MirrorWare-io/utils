@@ -1,6 +1,6 @@
-import {providers,utils,constants} from 'ethers'
+import { providers, utils, constants } from "ethers";
 
-export const AddressZero = constants.AddressZero
+export const AddressZero = constants.AddressZero;
 
 export const truncateAddress = (address: any) => {
 	if (!address) return "No Account";
@@ -15,10 +15,7 @@ export const truncateAddress = (address: any) => {
  * @param addrOrENS
  * @returns
  */
-export const cleanAddress = async (
-	provider: providers.Web3Provider,
-	addrOrENS?: string | null,
-) => {
+export const cleanAddress = async (provider: providers.Web3Provider, addrOrENS?: string | null) => {
 	if (!addrOrENS) {
 		return null;
 	}
