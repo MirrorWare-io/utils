@@ -39,6 +39,7 @@ import mechAbi from "./src/abis/mech";
 import mechAssemblerAbi from "./src/abis/mechAssembler";
 import revealedAbi from "./src/abis/revealed";
 import unrevealedAbi from "./src/abis/unrevealedAbi";
+import betaClaimAbi from "./src/abis/versionBetaClaim";
 import cyberbrokersAbi from "./src/abis/cyberbrokers";
 import cyberbrokersMetadataAbi from "./src/abis/cyberbrokerMetadata";
 const ABIS = {
@@ -50,6 +51,7 @@ const ABIS = {
 	mechAssemblerAbi,
 	revealedAbi,
 	unrevealedAbi,
+	betaClaimAbi,
 	cyberbrokersAbi,
 	cyberbrokersMetadataAbi,
 };
@@ -58,4 +60,4 @@ export { ABIS };
 /**
  * Transactions
  */
-export { handleTransaction } from "./src/transaction";
+export { handleTransaction, explorerLink } from "./src/transaction";
