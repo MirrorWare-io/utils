@@ -14,7 +14,7 @@
     "test": "ts-node ./testing-server/index.ts",
     "tape": "tape -r ts-node/register ./test/test.ts",
     "docs": "typedoc",
-    "deploy": "npm run build && cp package.json dist && cd dist && npm publish"
+    "deploy": "npm run build && cp package.json README.md dist && cd dist && npm publish"
   },
   "keywords": [],
   "dependencies": {
