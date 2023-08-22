@@ -22,6 +22,9 @@ export function getCbContractsByChainId(chainId: number | ChainEnum) {
 			swapAddress: "0xD3e169Be37f18C6997683ebCc498bfA61c3E09e1", //'0xa8abe01772747aa7b3a3d1e9c78a7fa9f3aebde6',
 			mechAddress: "0x0ccef3C248d10a54559684f024Df4c38bF7429e4",
 			mechCrafter: "0x1528d3216a35052683F8dB6990a59778c490f003",
+			versionBetaClaim: "",
+			cyberbrokersAccolades: "0xbf28d6Db1b70A30BBb29F3d6d5698c07937337a1",
+			cyberbrokersAccoladesClaim: "0x24B4717ac5C0962b4D3f41765785b87C6DC50796",
 		};
 	} else if (chainId == ChainEnum.SEPOLIA) {
 		throw new Error("Sepolia chain not supported yet");
@@ -38,6 +41,9 @@ export function getCbContractsByChainId(chainId: number | ChainEnum) {
 			afterGlowClaimAddress: "0xB6bF34FA8625b8119D2105161741D56e6B42Af29",
 			mechAddress: "0xb286ac8EFf9F44e2C377c6770CAd5Fc78BFf9eD6",
 			mechCrafter: "0xcaaAbC37c3056D8be7Ab8Be9749026b9a757d2c0",
+			versionBetaClaim: "0xC770dC511953265372840293a63Aa67AF631f3a3",
+			cyberbrokersAccolades: "0x2310C58d808c4F7Be4C4982518Ab65d4e4505654",
+			cyberbrokersAccoladesClaim: "0x4b656aE2394116E084B0D28B34C47CC8052C2C45",
 		};
 	}
 }

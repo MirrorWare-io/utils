@@ -1,4 +1,5 @@
 import { providers } from "ethers";
+import { ChainEnum } from "./chains";
 
 type txError = {
 	hash?: string;
@@ -37,4 +38,16 @@ export async function handleTransaction(transaction: providers.TransactionRespon
 	tx = await awaitTransaction(transaction);
 
 	return tx;
+}
+
+/**
+ * Returns a URL to etherscan for a given chain and transaction hash
+ * @param chainid a chain ID or ChainEnum;
+ * @param hash the transaction hash
+ * @returns A URL to etherscan for a given chain and transaction hash
+ */
+export function explorerLink(chainid: number | ChainEnum, hash: string) {
+	return `https://${
+		chainid == 5 ? "goerli." : chainid == ChainEnum.SEPOLIA ? "sepolia." : ""
+	}etherscan.io/tx/${hash}`;
 }
