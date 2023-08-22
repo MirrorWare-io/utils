@@ -42,6 +42,8 @@ import unrevealedAbi from "./src/abis/unrevealedAbi";
 import betaClaimAbi from "./src/abis/versionBetaClaim";
 import cyberbrokersAbi from "./src/abis/cyberbrokers";
 import cyberbrokersMetadataAbi from "./src/abis/cyberbrokerMetadata";
+import accoladeAbi from "./src/abis/accolade";
+import accoladeClaimAbi from "./src/abis/accoladeClaim";
 const ABIS = {
 	delegateAbi,
 	afterglowAbi,
@@ -54,6 +56,8 @@ const ABIS = {
 	betaClaimAbi,
 	cyberbrokersAbi,
 	cyberbrokersMetadataAbi,
+	accoladeAbi,
+	accoladeClaimAbi,
 };
 export { ABIS };
 
