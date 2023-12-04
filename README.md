@@ -14,6 +14,8 @@ Documentation: https://mirrorware-io.github.io/utils/
 | getWalletFromDelegate   | NEXT_PUBLIC_INFURA_API_KEY *if infura (generally used on front-end)* or ETH_ALCHEMY_KEY, GOERLI_ALCHEMY_KEY *if Alchemy (generally used on backend)*        | |
 
 
+**CyberBrokers Metadata**: CyberBrokers metadata is downloaded automatically on `npm i`. This is to keep the package size small
+
 ## Development
 
 1. Git clone the repo

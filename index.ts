@@ -16,9 +16,15 @@ export {
 	getCbContractsByChainId,
 	ALL_CB_CONTRACTS_ADDRESSES,
 	getContractsByChain,
+	getABIByAddress,
 	getDelegateContract,
 	getWalletFromDelegate,
 } from "./src/contracts";
+
+/**
+ * Metadata
+ */
+export { getMetadataForNFTs, metadataURIByAddress } from "./src/metadata";
 
 /**
  * Errors
@@ -31,35 +37,7 @@ export { toHex, parseTokenId, signTypedData } from "./src/helpers";
 /**
  * Abis
  */
-import delegateAbi from "./src/abis/delegateAbi";
-import afterglowAbi from "./src/abis/afterglow";
-import claimAbi from "./src/abis/claimAbi";
-import claimAfterglowAbi from "./src/abis/claimAfterglow";
-import mechAbi from "./src/abis/mech";
-import mechAssemblerAbi from "./src/abis/mechAssembler";
-import revealedAbi from "./src/abis/revealed";
-import unrevealedAbi from "./src/abis/unrevealedAbi";
-import betaClaimAbi from "./src/abis/versionBetaClaim";
-import cyberbrokersAbi from "./src/abis/cyberbrokers";
-import cyberbrokersMetadataAbi from "./src/abis/cyberbrokerMetadata";
-import accoladeAbi from "./src/abis/accolade";
-import accoladeClaimAbi from "./src/abis/accoladeClaim";
-const ABIS = {
-	delegateAbi,
-	afterglowAbi,
-	claimAbi,
-	claimAfterglowAbi,
-	mechAbi,
-	mechAssemblerAbi,
-	revealedAbi,
-	unrevealedAbi,
-	betaClaimAbi,
-	cyberbrokersAbi,
-	cyberbrokersMetadataAbi,
-	accoladeAbi,
-	accoladeClaimAbi,
-};
-export { ABIS };
+export { ABIS } from "./src/abis";
 
 /**
  * Transactions

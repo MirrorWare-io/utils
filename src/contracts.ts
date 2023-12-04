@@ -3,6 +3,7 @@ import delegateAbi from "./abis/delegateAbi";
 import config from "./config";
 import { delegateTuple } from "./types";
 import { ChainEnum } from "./chains";
+import { ABIS } from "./abis";
 /**
  * Retrieves the contract addresses for the given chainId
  * @param chainId number 1 or 5 or
@@ -67,6 +68,66 @@ export const getContractsByChain = async (signer: Signer) => {
 };
 
 /**
+ * Get ABI by the contract Address
+ * @param signer ethers signer
+ * @returns object
+ * @internal
+ */
+export const getABIByAddress = (address:string) => {
+	const ethAddresses = getCbContractsByChainId(1);
+	const goerliAddresses = getCbContractsByChainId(5);
+	
+	switch (address.toLowerCase()) {
+		/* Mechs */
+		case ethAddresses.mechAddress.toLowerCase():
+		case goerliAddresses.mechAddress.toLowerCase():
+			return ABIS.mechAbi;
+		/* Mech Assembler */
+		case ethAddresses.mechCrafter.toLowerCase():
+		case goerliAddresses.mechCrafter.toLowerCase():
+			return ABIS.mechAssemblerAbi;
+		/* CyberBrokers */
+		case ethAddresses.cyberBrokersAddress.toLowerCase():
+		case goerliAddresses.cyberBrokersAddress.toLowerCase():
+			return ABIS.cyberbrokersAbi;
+		/* Accolades */
+		case ethAddresses.cyberbrokersAccolades.toLowerCase():
+		case goerliAddresses.cyberbrokersAccolades.toLowerCase():
+			return ABIS.accoladeAbi;
+		/* Accolades Claim */
+		case ethAddresses.cyberbrokersAccoladesClaim.toLowerCase():
+		case goerliAddresses.cyberbrokersAccoladesClaim.toLowerCase():
+			return ABIS.accoladeClaimAbi;
+		/* Claim */
+		case ethAddresses.claimAddress.toLowerCase():
+		case goerliAddresses.claimAddress.toLowerCase():
+			return ABIS.claimAbi;
+		/* Afterglow */
+		case ethAddresses.afterGlowAddress.toLowerCase():
+		case goerliAddresses.afterGlowAddress.toLowerCase():
+			return ABIS.afterglowAbi;
+		/* Afterglow Claim */
+		case ethAddresses.afterGlowClaimAddress.toLowerCase():
+		case goerliAddresses.afterGlowClaimAddress.toLowerCase():
+			return ABIS.claimAfterglowAbi;
+		/* Revealed parts */
+		case ethAddresses.revealedAddress.toLowerCase():
+		case goerliAddresses.revealedAddress.toLowerCase():
+			return ABIS.revealedAbi;
+		/* Unrevealed parts */
+		case ethAddresses.unrevealedAddress.toLowerCase():
+		case goerliAddresses.unrevealedAddress.toLowerCase():
+			return ABIS.unrevealedAbi;
+		/* Delegate */
+		case ethAddresses.delegateAddress.toLowerCase():
+		case goerliAddresses.delegateAddress.toLowerCase():
+			return ABIS.delegateAbi;
+		default:
+			return null
+	}
+};
+
+/**
  * ==================== Delegate cash contract START ====
  *
  */
@@ -106,4 +167,28 @@ export async function getWalletFromDelegate(chainId: number | ChainEnum, address
 
 	// const filtered = tuples.filter((tuple) => tuple[0] == 1) // only get vaults for "DelegateForAll" type
 	return tuples;
+}
+
+/**
+ * ==================== Delegate cash contract START ====
+ *
+ */
+/**
+ * Returns a ethers.Contract instance for the given address; provider is not signed;
+ * Needs an alchemy key set in env vars; see documentation
+ * @param chainId number or ChainEnum
+ * @param address address
+ * @returns ethers.Contract instance
+ * @internal
+ */
+export function getContractForAddress(chainId: number | ChainEnum, address: string) {
+	const key =
+		config.infura.key || (chainId == 5 ? config.alchemy.goerli_key : config.alchemy.eth_key);
+	if (!key) throw new Error("getContractForAddress: No key found in envs; KEY:ETH_ALCHEMY_KEY or GOERLI_ALCHEMY_KEY");
+	const ProviderClass = config.infura.key ? providers.InfuraProvider : providers.AlchemyProvider;
+	if (!ProviderClass) throw new Error("getContractForAddress: No provider found");
+	const provider = new ProviderClass(chainId, key);
+	const ABI = getABIByAddress(address);
+	if(!ABI) throw new Error("getContractForAddress: No ABI found for address");
+	return new Contract(address, ABI, provider);
 }

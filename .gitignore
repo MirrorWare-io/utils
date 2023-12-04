@@ -4,3 +4,4 @@ dist
 yarn-error.log
 package-lock.json
 yarn.lock
+cb_metadata.json

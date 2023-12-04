@@ -1,4 +1,5 @@
 import { Signer } from "ethers";
+import fetch from "node-fetch";
 
 export const toHex = (num: any) => {
 	const val = Number(num);
@@ -31,3 +32,19 @@ export async function signTypedData(
 		return null;
 	}
 }
+
+/**
+ *
+ * @param uri
+ * @returns
+ * @internal
+ */
+export const fetchURI = async <T = any>(uri: string) => {
+	try {
+		const response = await fetch(uri, { headers: { "Content-Type": "application/json" } });
+		const json = (await response.json()) as T;
+		return json;
+	} catch {
+		return null;
+	}
+};
