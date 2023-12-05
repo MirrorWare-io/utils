@@ -2,7 +2,7 @@ export const unrevealedByTokenId = (tokenId: number) => {
 	const unrevealedData = (unrevealedMetadata.tokens as any)[tokenId.toString()];
 	if (!unrevealedData) return null;
 	const copied = JSON.parse(JSON.stringify(unrevealedData));
-	copied.part = copied.types[unrevealedData.typeIdx.toString()];
+	copied.part = (unrevealedMetadata.types as any)[copied.typeIdx.toString()];
 	delete copied.typeIdx;
 	return copied;
 };
