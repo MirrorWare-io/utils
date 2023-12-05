@@ -31,7 +31,7 @@ export const metadataURIByAddress = (contractAddress: string, chainId: number = 
 			return `${baseURI}/mech/%`;
 		case ethAddresses.revealedAddress.toLowerCase():
 		case goerliAddresses.revealedAddress.toLowerCase():
-			return `${baseURI}/parts/%`;
+			return `${baseURI}/part/%`;
 		default:
 			return null;
 	}
