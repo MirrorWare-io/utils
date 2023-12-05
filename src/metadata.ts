@@ -74,6 +74,9 @@ export const getMetadataForNFTs = async (
 				// Handle external metadata;
 				uri = uri.replace("%", tokenId);
 				const json = await fetchURI(uri);
+                if('success' in json && !json.success) {
+                    return {error: `Could not fetch metadata for ${contractAddress}:${chainId} id:${tokenId} -> success:false` }
+                }
 				return json || { tokenId: tokenId, error: `Could not fetch metadata for ${contractAddress}:${chainId} id:${tokenId}` };
 			})
 			.filter(x => !!x),
