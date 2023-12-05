@@ -15,7 +15,7 @@ export const metadataURIByAddress = (contractAddress: string, chainId: number = 
 	const baseURI = `https://m.cyberbrokers.com/${chain}`;
 
 	const ethAddresses = getCbContractsByChainId(1);
-	const goerliAddresses = getCbContractsByChainId(1);
+	const goerliAddresses = getCbContractsByChainId(5);
 	switch (contractAddress.toLowerCase()) {
 		case ethAddresses.cyberBrokersAddress.toLowerCase():
 		case goerliAddresses.cyberBrokersAddress.toLowerCase():
@@ -51,7 +51,7 @@ export const getMetadataForNFTs = async (
 ) => {
 	const metadata = await Promise.all(
 		tokenIds
-			.map(async tokenId => {
+			.map( async tokenId => {
 				let uri = metadataURIByAddress(contractAddress, chainId);
 				if (!uri)
 					return {

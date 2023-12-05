@@ -14,7 +14,7 @@
     "test": "ts-node ./testing-server/index.ts",
     "tape": "tape -r ts-node/register ./test/test.ts",
     "docs": "typedoc",
-    "deploy:npm": "npm run build && cp package.json README.md dist && mkdir -p dist/bin && cp -r bin/. dist && cd dist && rm -rf cb_metadata.json && npm publish",
+    "deploy:npm": "npm run build && cp package.json README.md dist && mkdir -p dist/bin && cp -r bin/. dist/bin && cd dist && rm -rf cb_metadata.json && npm publish",
     "postinstall": "node bin/postinstall.js"
   },
   "keywords": [],
