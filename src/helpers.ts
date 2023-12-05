@@ -44,7 +44,8 @@ export const fetchURI = async <T = any>(uri: string) => {
 		const response = await fetch(uri, { headers: { "Content-Type": "application/json" } });
 		const json = (await response.json()) as T;
 		return json;
-	} catch {
+	} catch(e) {
+		console.error(e)
 		return null;
 	}
 };
