@@ -20,5 +20,7 @@ const fetch = require('node-fetch');
         })
         .catch(err => {
             console.error(err);
+        }).finally(()=>{
+            console.log('[@cyberbrokers/eth-utils] metadata download complete');
         })
 })()
