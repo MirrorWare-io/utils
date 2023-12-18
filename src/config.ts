@@ -1,5 +1,5 @@
 import { Subset } from "./types";
-interface Config {
+export interface Config {
 	infura: {
 		key: string;
 	};
@@ -9,7 +9,7 @@ interface Config {
 		eth_key: string;
 	};
 }
-/* @internal */
+
 const config: Config & { setConfig: (config: Subset<Config>) => void; } = {
 	setConfig: (_config: Subset<Config>) => {
 		Object.assign(config, _config);
@@ -23,5 +23,5 @@ const config: Config & { setConfig: (config: Subset<Config>) => void; } = {
 		eth_key: "",
 	},
 };
-/* @internal */
+
 export default config;

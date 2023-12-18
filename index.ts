@@ -1,6 +1,7 @@
-import config from "./src/config";
+import config,{Config} from "./src/config";
 export {
-	config
+	config,
+	Config
 }
 
 /**
@@ -48,3 +49,8 @@ export { ABIS } from "./src/abis";
  * Transactions
  */
 export { handleTransaction, explorerLink } from "./src/transaction";
+
+/**
+ * Types
+ */
+export { Subset, delegateTuple } from "./src/types";
