@@ -4,15 +4,23 @@
 
 Install using `npm i @cyberbrokers/eth-utils`
 
+```typescript
+import {config} from '@cyberbrokers/eth-utils'
+import {getCbContractsByChainId} from '@cyberbrokers/eth-utils'
+
+/**
+ * Only necessary if you plan on using methods that require configs, such as getDelegateContract, getContractForAddress
+ * */
+config.setConfig({ 
+    alchemy:{
+        eth_key: 'dwd..'
+    }
+})
+
+getCbContractsByChainId(1).cyberBrokersAddress // Cyberbrokers 0x... contract address
+```
+
 Documentation: https://mirrorware-io.github.io/utils/
-
-**NOTE:** Some functions need environment variables set; Below are a list of functions and what envs they need defined:
-
-| Function      | Env needed | Info |
-| ----------- | ----------- | ----------- |
-| getDelegateContract      | NEXT_PUBLIC_INFURA_API_KEY *if infura (generally used on front-end)* or ETH_ALCHEMY_KEY, GOERLI_ALCHEMY_KEY *if Alchemy (generally used on backend)*       | Note: We use NEXT_PUBLIC... so that the key can be exposed on the front-end of a nextJS application |
-| getWalletFromDelegate   | NEXT_PUBLIC_INFURA_API_KEY *if infura (generally used on front-end)* or ETH_ALCHEMY_KEY, GOERLI_ALCHEMY_KEY *if Alchemy (generally used on backend)*        | |
-
 
 **CyberBrokers Metadata**: CyberBrokers metadata is downloaded automatically on `npm i`. This is to keep the package size small
 

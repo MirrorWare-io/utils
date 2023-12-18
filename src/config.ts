@@ -1,3 +1,4 @@
+import { Subset } from "./types";
 interface Config {
 	infura: {
 		key: string;
@@ -9,14 +10,17 @@ interface Config {
 	};
 }
 /* @internal */
-const values: Config = {
+const values: Config & { setConfig: (config: Subset<Config>) => void; } = {
+	setConfig: (config: Subset<Config>) => {
+		Object.assign(values, config);
+	},
 	infura: {
-		key: process.env.NEXT_PUBLIC_INFURA_API_KEY || "",
+		key: "",
 	},
 	alchemy: {
-		goerli_key: process.env.GOERLI_ALCHEMY_KEY || "",
-		sepolia_key: process.env.SEPOLIA_ALCHEMY_KEY || "",
-		eth_key: process.env.ETH_ALCHEMY_KEY || "",
+		goerli_key: "",
+		sepolia_key: "",
+		eth_key: "",
 	},
 };
 /* @internal */

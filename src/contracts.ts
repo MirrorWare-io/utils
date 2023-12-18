@@ -133,7 +133,7 @@ export const getABIByAddress = (address:string) => {
  */
 /**
  * Returns a ethers.Contract instance of the delegate contract
- * Needs a key set in env vars; see documentation
+ * make sure you call "config.setConfig" before calling this function
  * @param chainId number or ChainEnum
  * @returns ethers.Contract instance
  * @internal
@@ -141,7 +141,7 @@ export const getABIByAddress = (address:string) => {
 export function getDelegateContract(chainId: number | ChainEnum) {
 	const key =
 		config.infura.key || (chainId == 5 ? config.alchemy.goerli_key : config.alchemy.eth_key);
-	if (!key) throw new Error("getDelegateContract: No key found in envs.");
+	if (!key) throw new Error("getDelegateContract: Please set alchemy.goerli_key or/and alchemy.eth_key in configs.");
 	const ProviderClass = config.infura.key ? providers.InfuraProvider : providers.AlchemyProvider;
 	if (!ProviderClass) throw new Error("getDelegateContract: No provider found");
 	const provider = new ProviderClass(chainId, key);
@@ -175,7 +175,7 @@ export async function getWalletFromDelegate(chainId: number | ChainEnum, address
  */
 /**
  * Returns a ethers.Contract instance for the given address; provider is not signed;
- * Needs an alchemy key set in env vars; see documentation
+ * make sure you call "config.setConfig" before calling this function
  * @param chainId number or ChainEnum
  * @param address address
  * @returns ethers.Contract instance
@@ -184,7 +184,7 @@ export async function getWalletFromDelegate(chainId: number | ChainEnum, address
 export function getContractForAddress(chainId: number | ChainEnum, address: string) {
 	const key =
 		config.infura.key || (chainId == 5 ? config.alchemy.goerli_key : config.alchemy.eth_key);
-	if (!key) throw new Error("getContractForAddress: No key found in envs; KEY:ETH_ALCHEMY_KEY or GOERLI_ALCHEMY_KEY");
+	if (!key) throw new Error("getContractForAddress: please set alchemy.goerli_key or/and alchemy.eth_key in configs.");
 	const ProviderClass = config.infura.key ? providers.InfuraProvider : providers.AlchemyProvider;
 	if (!ProviderClass) throw new Error("getContractForAddress: No provider found");
 	const provider = new ProviderClass(chainId, key);
