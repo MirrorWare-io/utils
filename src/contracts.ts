@@ -153,7 +153,6 @@ export function getDelegateContract(chainId: number | ChainEnum) {
  * @param chainId chain Id
  * @param address delegate address
  * @returns tuple
- * @internal
  */
 export async function getWalletFromDelegate(chainId: number | ChainEnum, address: string) {
 	const contract = getDelegateContract(chainId);
