@@ -10,9 +10,9 @@ interface Config {
 	};
 }
 /* @internal */
-const values: Config & { setConfig: (config: Subset<Config>) => void; } = {
-	setConfig: (config: Subset<Config>) => {
-		Object.assign(values, config);
+const config: Config & { setConfig: (config: Subset<Config>) => void; } = {
+	setConfig: (_config: Subset<Config>) => {
+		Object.assign(config, _config);
 	},
 	infura: {
 		key: "",
@@ -24,4 +24,4 @@ const values: Config & { setConfig: (config: Subset<Config>) => void; } = {
 	},
 };
 /* @internal */
-export default values;
+export default config;
