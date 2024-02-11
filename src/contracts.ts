@@ -159,12 +159,13 @@ export async function getDelegateContractWithProvider(provider: providers.UrlJso
 
 /**
  * Calls getDelegationsByDelegate to retrieve all vaults for a given delegate
- * @param chainId chain Id
+ * @param chainId chain Id - only necessary if provider is not provided
+ * @param provider ethers provider, optional;
  * @param address delegate address
  * @returns tuple
  */
-export async function getWalletFromDelegate(chainId: number | ChainEnum, address: string) {
-	const contract = getDelegateContract(chainId);
+export async function getWalletFromDelegate(address: string, provider?:providers.UrlJsonRpcProvider|providers.Web3Provider,chainId: number | ChainEnum=1) {
+	const contract = provider?await getDelegateContractWithProvider(provider):getDelegateContract(chainId);
 	let tuples: delegateTuple;
 	try {
 		tuples = await contract.getDelegationsByDelegate(address);
