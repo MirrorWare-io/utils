@@ -24,6 +24,7 @@ export {
 	getContractsByChain,
 	getABIByAddress,
 	getDelegateContract,
+	getDelegateContractWithProvider,
 	getWalletFromDelegate,
 } from "./src/contracts";
 

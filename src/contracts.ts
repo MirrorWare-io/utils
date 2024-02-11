@@ -148,6 +148,15 @@ export function getDelegateContract(chainId: number | ChainEnum) {
 	const addresses = getCbContractsByChainId(chainId);
 	return new Contract(addresses.delegateAddress, delegateAbi, provider);
 }
+
+export async function getDelegateContractWithProvider(provider: providers.UrlJsonRpcProvider|providers.Web3Provider,chainId?: number | ChainEnum) {
+	if(!chainId){
+		chainId = (await provider.getNetwork()).chainId;
+	}
+	const addresses = getCbContractsByChainId(chainId);
+	return new Contract(addresses.delegateAddress, delegateAbi, provider);
+}
+
 /**
  * Calls getDelegationsByDelegate to retrieve all vaults for a given delegate
  * @param chainId chain Id
