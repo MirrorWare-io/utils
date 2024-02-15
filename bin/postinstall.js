@@ -11,7 +11,7 @@ const fetch = require('node-fetch');
 (()=>{
     const url = 'https://m.cyberbrokers.com/eth/cyberbrokers/all';
     const filePath = path.join(__dirname, '../cb_metadata.json');
-    fetch(url)
+    fetch(url, { headers: { 'Accept-Encoding': 'identity' } })
         .then(res => res.json())
         .then(json => {
             fs.writeFileSync(filePath, JSON.stringify(json, null, 2),(err)=>{
