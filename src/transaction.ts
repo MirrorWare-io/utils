@@ -1,12 +1,12 @@
-import { providers } from "ethers";
+import { TransactionReceipt, TransactionResponse } from "ethers";
 import { ChainEnum } from "./chains";
 
 type txError = {
 	hash?: string;
 	reason?: "repriced" | "cancelled" | "replaced";
 	cancelled?: boolean;
-	replacement?: providers.TransactionResponse;
-	receipt?: providers.TransactionReceipt;
+	replacement?: TransactionResponse;
+	receipt?: TransactionReceipt;
 };
 /**
  * A transaction helper method that attempts to wait for a transaction to be mined. Includes replaced or repriced transactions
@@ -14,11 +14,11 @@ type txError = {
  * @returns TransactionReceipt
  * @internal
  */
-export async function handleTransaction(transaction: providers.TransactionResponse) {
+export async function handleTransaction(transaction: TransactionResponse) {
 	let tx;
 
-	const awaitTransaction = async (trans: providers.TransactionResponse) => {
-		let tx: providers.TransactionReceipt;
+	const awaitTransaction = async (trans: TransactionResponse):Promise<TransactionReceipt | null> => {
+		let tx: TransactionReceipt | null;
 		try {
 			tx = await trans.wait(1);
 		} catch (error: any) {

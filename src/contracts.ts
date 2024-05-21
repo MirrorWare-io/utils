@@ -1,4 +1,4 @@
-import { BigNumber, Contract, Signer, providers } from "ethers";
+import { Contract, Signer, BrowserProvider, JsonRpcProvider, AlchemyProvider, InfuraProvider } from "ethers";
 import delegateAbi from "./abis/delegateAbi";
 import config from "./config";
 import { delegateTuple, delegateV2Tuple } from "./types";
@@ -30,7 +30,23 @@ export function getCbContractsByChainId(chainId: number | ChainEnum) {
 			cyberbrokersAccoladesClaim: "0x24B4717ac5C0962b4D3f41765785b87C6DC50796",
 		};
 	} else if (chainId == ChainEnum.SEPOLIA) {
-		throw new Error("Sepolia chain not supported yet");
+
+		return {
+			cyberBrokersAddress: "",
+			delegateAddress: "0x00000000000076A84feF008CDAbe6409d2FE638B",
+			delegateV2Address: "0x00000000000000447e69651d841bD8D104Bed493",
+			claimAddress: "",
+			unrevealedAddress: "", 
+			afterGlowAddress: "", //"",
+			afterGlowClaimAddress: "",
+			revealedAddress: "", //'',
+			swapAddress: "", //'',
+			mechAddress: "",
+			mechCrafter: "",
+			versionBetaClaim: "",
+			cyberbrokersAccolades: "",
+			cyberbrokersAccoladesClaim: "",
+		}
 	} else {
 		// eth network by default
 		return {
@@ -65,9 +81,9 @@ export const ALL_CB_CONTRACTS_ADDRESSES = [
  * @internal
  */
 export const getContractsByChain = async (signer: Signer) => {
-	let chain = await signer.getChainId();
-
-	return getCbContractsByChainId(chain);
+	let chain = await signer.provider?.getNetwork()
+	const id = chain?.chainId
+	return getCbContractsByChainId(Number(id));
 };
 
 /**
@@ -147,9 +163,9 @@ export const getABIByAddress = (address:string) => {
  */
 export function getDelegateContract(chainId: number | ChainEnum) {
 	const key =
-		config.infura.key || (chainId == 5 ? config.alchemy.goerli_key : config.alchemy.eth_key);
-	if (!key) throw new Error("getDelegateContract: Please set alchemy.goerli_key or/and alchemy.eth_key in configs.");
-	const ProviderClass = config.infura.key ? providers.InfuraProvider : providers.AlchemyProvider;
+	config.infura.key || (chainId == 5 ? config.alchemy.goerli_key : chainId == 11155111? config.alchemy.sepolia_key : config.alchemy.eth_key);
+	if (!key) throw new Error("getDelegateContract: Please set alchemy.goerli_key, sepolia_key or/and alchemy.eth_key in configs. Chain : "+ chainId);
+	const ProviderClass = config.infura.key ? InfuraProvider : AlchemyProvider;
 	if (!ProviderClass) throw new Error("getDelegateContract: No provider found");
 	const provider = new ProviderClass(chainId, key);
 	const addresses = getCbContractsByChainId(chainId);
@@ -165,9 +181,9 @@ export function getDelegateContract(chainId: number | ChainEnum) {
  */
 export function getDelegateV2Contract(chainId: number | ChainEnum) {
 	const key =
-		config.infura.key || (chainId == 5 ? config.alchemy.goerli_key : config.alchemy.eth_key);
-	if (!key) throw new Error("getDelegateContract: Please set alchemy.goerli_key or/and alchemy.eth_key in configs.");
-	const ProviderClass = config.infura.key ? providers.InfuraProvider : providers.AlchemyProvider;
+		config.infura.key || (chainId == 5 ? config.alchemy.goerli_key : chainId == 11155111? config.alchemy.sepolia_key : config.alchemy.eth_key);
+	if (!key) throw new Error("getDelegateContract: Please set alchemy.goerli_key, sepolia_key or/and alchemy.eth_key in configs. Chain : "+ chainId);;
+	const ProviderClass = config.infura.key ? InfuraProvider : AlchemyProvider;
 	if (!ProviderClass) throw new Error("getDelegateContract: No provider found");
 	const provider = new ProviderClass(chainId, key);
 	const addresses = getCbContractsByChainId(chainId);
@@ -180,17 +196,17 @@ export function getDelegateV2Contract(chainId: number | ChainEnum) {
  * @param chainId number or ChainEnum
  * @returns ethers.Contract instance
  */
-export async function getDelegateV2ContractWithProvider(provider: providers.UrlJsonRpcProvider|providers.Web3Provider,chainId?: number | ChainEnum) {
+export async function getDelegateV2ContractWithProvider(provider: JsonRpcProvider|BrowserProvider,chainId?: number | ChainEnum) {
 	if(!chainId){
-		chainId = (await provider.getNetwork()).chainId;
+		chainId = Number((await provider.getNetwork()).chainId);
 	}
 	const addresses = getCbContractsByChainId(chainId);
 	return new Contract(addresses.delegateAddress, delegateAbi, provider);
 }
 
-export async function getDelegateContractWithProvider(provider: providers.UrlJsonRpcProvider|providers.Web3Provider,chainId?: number | ChainEnum) {
+export async function getDelegateContractWithProvider(provider: JsonRpcProvider|BrowserProvider,chainId?: number | ChainEnum) {
 	if(!chainId){
-		chainId = (await provider.getNetwork()).chainId;
+		chainId = Number((await provider.getNetwork()).chainId);
 	}
 	const addresses = getCbContractsByChainId(chainId);
 	return new Contract(addresses.delegateAddress, delegateAbi, provider);
@@ -203,7 +219,7 @@ export async function getDelegateContractWithProvider(provider: providers.UrlJso
  * @param address delegate address
  * @returns tuple
  */
-export async function getWalletFromDelegate(address: string, provider?:providers.UrlJsonRpcProvider|providers.Web3Provider,chainId: number | ChainEnum=1) {
+export async function getWalletFromDelegate(address: string, provider?:JsonRpcProvider|BrowserProvider,chainId: number | ChainEnum=1) {
 	const contract = provider?await getDelegateContractWithProvider(provider):getDelegateContract(chainId);
 	let tuples: delegateTuple;
 	try {
@@ -224,7 +240,7 @@ export async function getWalletFromDelegate(address: string, provider?:providers
  * @param address delegate address
  * @returns tuple
  */
-export async function getWalletFromDelegateV2(address: string, provider?:providers.UrlJsonRpcProvider|providers.Web3Provider,chainId: number | ChainEnum=1) {
+export async function getWalletFromDelegateV2(address: string, provider?:JsonRpcProvider|BrowserProvider,chainId: number | ChainEnum=1) {
 	const contract = provider?await getDelegateV2ContractWithProvider(provider):getDelegateV2Contract(chainId);
 	let tuples: delegateV2Tuple;
 	try {
@@ -245,7 +261,7 @@ export async function getWalletFromDelegateV2(address: string, provider?:provide
  * @param address delegate address
  * @returns tuple
  */
-export async function getWalletFromALLDelegates(address: string, provider?:providers.UrlJsonRpcProvider|providers.Web3Provider,chainId: number | ChainEnum=1) {
+export async function getWalletFromALLDelegates(address: string, provider?:JsonRpcProvider|BrowserProvider,chainId: number | ChainEnum=1) {
 	const contract = provider?await getDelegateV2ContractWithProvider(provider):getDelegateV2Contract(chainId);
 	let tuples: delegateV2Tuple = []!;
 	try {
@@ -270,8 +286,8 @@ export async function getWalletFromALLDelegates(address: string, provider?:provi
 		vault: string;
 		rights: string;
 		contract: string;
-		tokenId: BigNumber;
-		amount: BigNumber;
+		tokenId: BigInt;
+		amount: BigInt;
 	}[]
 
 /**
@@ -302,7 +318,7 @@ export async function getWalletFromALLDelegates(address: string, provider?:provi
 
 	tuplesV1.forEach((tuple) => {
 		const [type, vault,delegate, contract_, tokenId] = tuple;
-		json.push({ version:"v1",type, delegate, vault, contract:contract_, tokenId, rights:"0x00", amount: BigNumber.from(0) });
+		json.push({ version:"v1",type, delegate, vault, contract:contract_, tokenId, rights:"0x0000000000000000000000000000000000000000000000000000000000000000", amount: BigInt(0) });
 	});
 	return json;
 }
@@ -320,9 +336,10 @@ export async function getWalletFromALLDelegates(address: string, provider?:provi
  */
 export function getContractForAddress(chainId: number | ChainEnum, address: string) {
 	const key =
-		config.infura.key || (chainId == 5 ? config.alchemy.goerli_key : config.alchemy.eth_key);
-	if (!key) throw new Error("getContractForAddress: please set alchemy.goerli_key or/and alchemy.eth_key in configs.");
-	const ProviderClass = config.infura.key ? providers.InfuraProvider : providers.AlchemyProvider;
+	config.infura.key || (chainId == 5 ? config.alchemy.goerli_key : chainId == 11155111? config.alchemy.sepolia_key : config.alchemy.eth_key);
+
+	if (!key) throw new Error("getContractForAddress: please set alchemy.goerli_key, sepolia_key or/and alchemy.eth_key in configs. Chain : "+ chainId);
+	const ProviderClass = config.infura.key ? InfuraProvider : AlchemyProvider;
 	if (!ProviderClass) throw new Error("getContractForAddress: No provider found");
 	const provider = new ProviderClass(chainId, key);
 	const ABI = getABIByAddress(address);

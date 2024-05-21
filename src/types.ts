@@ -1,4 +1,3 @@
-import { BigNumber } from "ethers";
 
 /** Per {@link https://github.com/ethereum/EIPs/blob/master/EIPS/eip-3085.md#parameters EIP-3085} */
 export interface AddEthereumChainParameter {
@@ -14,8 +13,8 @@ export interface AddEthereumChainParameter {
 	iconUrls?: string[];
 }
 
-export type delegateTuple = [number, string, string, string, BigNumber][];
-export type delegateV2Tuple = [number, string, string, string,string, BigNumber,BigNumber][];
+export type delegateTuple = [number, string, string, string, BigInt][];
+export type delegateV2Tuple = [number, string, string, string,string, BigInt,BigInt][];
 
 // For partially nested objects
 export type Subset<K> = {

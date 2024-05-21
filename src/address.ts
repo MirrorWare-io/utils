@@ -1,9 +1,9 @@
-import { providers, utils, constants } from "ethers";
+import { BrowserProvider, isAddress, ZeroAddress } from "ethers";
 
 /**
  * @type {string}
  */
-export const AddressZero = constants.AddressZero;
+export const AddressZero = ZeroAddress;
 
 /**
  * Returns a truncated version of an ETH address
@@ -19,18 +19,18 @@ export const truncateAddress = (address: string) => {
 
 /**
  * Method that gets anything (supports any string, including ENS names) and returns an ETH address or NULL
- * @param {providers.Web3Provider} provider web3 provider
+ * @param {BrowserProvider} provider web3 provider
  * @param {string} addrOrENS address or ENS name
  * @returns string or null
  */
-export const cleanAddress = async (provider: providers.Web3Provider, addrOrENS?: string | null) => {
+export const cleanAddress = async (provider: BrowserProvider, addrOrENS?: string | null) => {
 	if (!addrOrENS) {
 		return null;
 	}
-	if (utils.isAddress(addrOrENS)) {
+	if (isAddress(addrOrENS)) {
 		return addrOrENS;
 	}
-	if (addrOrENS.match(/.eth$/)) {
+	if ((addrOrENS as string).match(/.eth$/)) {
 		try {
 			let addr = await provider.resolveName(addrOrENS);
 			return addr;
