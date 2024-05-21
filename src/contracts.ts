@@ -1,9 +1,10 @@
-import { Contract, Signer, providers } from "ethers";
+import { BigNumber, Contract, Signer, providers } from "ethers";
 import delegateAbi from "./abis/delegateAbi";
 import config from "./config";
-import { delegateTuple } from "./types";
+import { delegateTuple, delegateV2Tuple } from "./types";
 import { ChainEnum } from "./chains";
 import { ABIS } from "./abis";
+import delegateV2 from "./abis/delegateV2";
 /**
  * Retrieves the contract addresses for the given chainId
  * @param chainId number 1 or 5 or
@@ -15,6 +16,7 @@ export function getCbContractsByChainId(chainId: number | ChainEnum) {
 		return {
 			cyberBrokersAddress: "0xd85CF2bcc04039318908aCCdAc0DBb9C4472D938",
 			delegateAddress: "0x00000000000076A84feF008CDAbe6409d2FE638B",
+			delegateV2Address: "0x00000000000000447e69651d841bD8D104Bed493",
 			claimAddress: "0xb98d9C766BD779744F6D74AD68aF7654c8D97CE6",
 			unrevealedAddress: "0xbc4e5766a79c9b105f5cadec0a7261c9c0b8c2d0", // Actual production "0xECFDe07BB7558BF7C882a5fB32300aFC868cE846",
 			afterGlowAddress: "0x653271bb96969643Ba45F622D6113a6Cd8b06ae2", //"0x655e85d080592925492922F2616E2b52C1f40B7C",
@@ -34,6 +36,7 @@ export function getCbContractsByChainId(chainId: number | ChainEnum) {
 		return {
 			cyberBrokersAddress: "0x892848074ddeA461A15f337250Da3ce55580CA85",
 			delegateAddress: "0x00000000000076A84feF008CDAbe6409d2FE638B",
+			delegateV2Address: "0x00000000000000447e69651d841bD8D104Bed493",
 			claimAddress: "0xa6B750fbb80FFDB9e77458466562a4c5627877ba",
 			unrevealedAddress: "0xf4baCB2375654Ef2459f427C8c6cF34573f75154",
 			afterGlowAddress: "0xa47FB7c4eDd3475CE66F49a66b9bf1edbc61e52d",
@@ -122,6 +125,10 @@ export const getABIByAddress = (address:string) => {
 		case ethAddresses.delegateAddress.toLowerCase():
 		case goerliAddresses.delegateAddress.toLowerCase():
 			return ABIS.delegateAbi;
+		/* Delegate V2 */
+		case ethAddresses.delegateV2Address.toLowerCase():
+		case goerliAddresses.delegateV2Address.toLowerCase():
+			return ABIS.delegateV2Abi;
 		default:
 			return null
 	}
@@ -145,6 +152,38 @@ export function getDelegateContract(chainId: number | ChainEnum) {
 	const ProviderClass = config.infura.key ? providers.InfuraProvider : providers.AlchemyProvider;
 	if (!ProviderClass) throw new Error("getDelegateContract: No provider found");
 	const provider = new ProviderClass(chainId, key);
+	const addresses = getCbContractsByChainId(chainId);
+	return new Contract(addresses.delegateAddress, delegateAbi, provider);
+}
+
+/**
+ * Returns a ethers.Contract instance of the delegate V2 contract
+ * make sure you call "config.setConfig" before calling this function
+ * @param chainId number or ChainEnum
+ * @returns ethers.Contract instance
+ * @internal
+ */
+export function getDelegateV2Contract(chainId: number | ChainEnum) {
+	const key =
+		config.infura.key || (chainId == 5 ? config.alchemy.goerli_key : config.alchemy.eth_key);
+	if (!key) throw new Error("getDelegateContract: Please set alchemy.goerli_key or/and alchemy.eth_key in configs.");
+	const ProviderClass = config.infura.key ? providers.InfuraProvider : providers.AlchemyProvider;
+	if (!ProviderClass) throw new Error("getDelegateContract: No provider found");
+	const provider = new ProviderClass(chainId, key);
+	const addresses = getCbContractsByChainId(chainId);
+	return new Contract(addresses.delegateV2Address, delegateV2, provider);
+}
+
+/**
+ * Returns a ethers.Contract instance of the delegate V2 contract
+ * make sure you call "config.setConfig" before calling this function
+ * @param chainId number or ChainEnum
+ * @returns ethers.Contract instance
+ */
+export async function getDelegateV2ContractWithProvider(provider: providers.UrlJsonRpcProvider|providers.Web3Provider,chainId?: number | ChainEnum) {
+	if(!chainId){
+		chainId = (await provider.getNetwork()).chainId;
+	}
 	const addresses = getCbContractsByChainId(chainId);
 	return new Contract(addresses.delegateAddress, delegateAbi, provider);
 }
@@ -179,7 +218,96 @@ export async function getWalletFromDelegate(address: string, provider?:providers
 }
 
 /**
- * ==================== Delegate cash contract START ====
+ * Calls getDelegationsByDelegateV2 to retrieve all vaults for a given delegate V2
+ * @param chainId chain Id - only necessary if provider is not provided
+ * @param provider ethers provider, optional;
+ * @param address delegate address
+ * @returns tuple
+ */
+export async function getWalletFromDelegateV2(address: string, provider?:providers.UrlJsonRpcProvider|providers.Web3Provider,chainId: number | ChainEnum=1) {
+	const contract = provider?await getDelegateV2ContractWithProvider(provider):getDelegateV2Contract(chainId);
+	let tuples: delegateV2Tuple;
+	try {
+		tuples = await contract.getIncomingDelegations(address);
+	} catch (e) {
+		console.debug(e?.toString ? e.toString() : e);
+		return [];
+	}
+
+	// const filtered = tuples.filter((tuple) => tuple[0] == 1) // only get vaults for "DelegateForAll" type
+	return tuples;
+}
+
+/**
+ * Calls getDelegationsByDelegateV2 AND V1 to retrieve all vaults for a given delegate;
+ * @param chainId chain Id - only necessary if provider is not provided
+ * @param provider ethers provider, optional;
+ * @param address delegate address
+ * @returns tuple
+ */
+export async function getWalletFromALLDelegates(address: string, provider?:providers.UrlJsonRpcProvider|providers.Web3Provider,chainId: number | ChainEnum=1) {
+	const contract = provider?await getDelegateV2ContractWithProvider(provider):getDelegateV2Contract(chainId);
+	let tuples: delegateV2Tuple = []!;
+	try {
+		tuples = await contract.getIncomingDelegations(address);
+	} catch (e) {
+		console.debug(e?.toString ? e.toString() : e);
+	}
+
+	const contractV1 = provider?await getDelegateContractWithProvider(provider):getDelegateContract(chainId);
+	let tuplesV1: delegateTuple = []!;
+	try {
+		tuplesV1 = await contractV1.getDelegationsByDelegate(address);
+	} catch (e) {
+		console.debug(e?.toString ? e.toString() : e);
+	}
+
+	// convert tuples to json for easier handling
+	const json = [] as {
+		version: "v1" | "v2";
+		type: number;
+		delegate: string;
+		vault: string;
+		rights: string;
+		contract: string;
+		tokenId: BigNumber;
+		amount: BigNumber;
+	}[]
+
+/**
+ *     struct Delegation V2 {
+        DelegationType type_;
+        address to;
+        address from;
+        bytes32 rights;
+        address contract_;
+        uint256 tokenId;
+        uint256 amount;
+    }
+ */
+	tuples.forEach((tuple) => {
+		const [type, delegate, vault, rights, contract, tokenId, amount] = tuple;
+		json.push({ version:"v2", type, delegate, vault, rights, contract, tokenId, amount });
+	});
+
+	/**
+	 *     struct DelegationInfo {
+        DelegationType type_;
+        address vault;
+        address delegate;
+        address contract_;
+        uint256 tokenId;
+    }
+	 */
+
+	tuplesV1.forEach((tuple) => {
+		const [type, vault,delegate, contract_, tokenId] = tuple;
+		json.push({ version:"v1",type, delegate, vault, contract:contract_, tokenId, rights:"0x00", amount: BigNumber.from(0) });
+	});
+	return json;
+}
+/**
+ * ==================== Delegate cash contract END ====
  *
  */
 /**

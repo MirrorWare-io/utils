@@ -15,6 +15,7 @@ export interface AddEthereumChainParameter {
 }
 
 export type delegateTuple = [number, string, string, string, BigNumber][];
+export type delegateV2Tuple = [number, string, string, string,string, BigNumber,BigNumber][];
 
 // For partially nested objects
 export type Subset<K> = {

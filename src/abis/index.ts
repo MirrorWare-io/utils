@@ -1,4 +1,5 @@
 import delegateAbi from "./delegateAbi";
+import delegateV2Abi from "./delegateV2";
 import afterglowAbi from "./afterglow";
 import claimAbi from "./claimAbi";
 import claimAfterglowAbi from "./claimAfterglow";
@@ -24,6 +25,7 @@ export const ABIS = {
 	cyberbrokersAbi,
 	cyberbrokersMetadataAbi,
 	accoladeAbi,
+	delegateV2Abi,
 	accoladeClaimAbi,
 };
 export default ABIS
