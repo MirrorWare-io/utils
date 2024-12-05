@@ -17,7 +17,7 @@
 <h1>Function getWalletFromDelegate</h1></div>
 <section class="tsd-panel">
 <ul class="tsd-signatures">
-<li class="tsd-signature tsd-anchor-link" id="getWalletFromDelegate"><span class="tsd-kind-call-signature">get<wbr/>Wallet<wbr/>From<wbr/>Delegate</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">chainId</span>, <span class="tsd-kind-parameter">address</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../types/delegateTuple.html" class="tsd-signature-type tsd-kind-type-alias">delegateTuple</a><span class="tsd-signature-symbol">&gt;</span><a href="#getWalletFromDelegate" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><g stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" id="icon-anchor"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5"></path><path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5"></path></g></svg></a></li>
+<li class="tsd-signature tsd-anchor-link" id="getWalletFromDelegate"><span class="tsd-kind-call-signature">get<wbr/>Wallet<wbr/>From<wbr/>Delegate</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">address</span>, <span class="tsd-kind-parameter">provider</span><span class="tsd-signature-symbol">?</span>, <span class="tsd-kind-parameter">chainId</span><span class="tsd-signature-symbol">?</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../types/delegateTuple.html" class="tsd-signature-type tsd-kind-type-alias">delegateTuple</a><span class="tsd-signature-symbol">&gt;</span><a href="#getWalletFromDelegate" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><g stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" id="icon-anchor"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5"></path><path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5"></path></g></svg></a></li>
 <li class="tsd-description">
 <div class="tsd-comment tsd-typography"><p>Calls getDelegationsByDelegate to retrieve all vaults for a given delegate</p>
 </div>
@@ -25,20 +25,25 @@
 <h4 class="tsd-parameters-title">Parameters</h4>
 <ul class="tsd-parameter-list">
 <li>
-<h5><span class="tsd-kind-parameter">chainId</span>: <span class="tsd-signature-type">number</span></h5>
-<div class="tsd-comment tsd-typography"><p>chain Id</p>
+<h5><span class="tsd-kind-parameter">address</span>: <span class="tsd-signature-type">string</span></h5>
+<div class="tsd-comment tsd-typography"><p>delegate address</p>
 </div>
 <div class="tsd-comment tsd-typography"></div></li>
 <li>
-<h5><span class="tsd-kind-parameter">address</span>: <span class="tsd-signature-type">string</span></h5>
-<div class="tsd-comment tsd-typography"><p>delegate address</p>
+<h5><code class="tsd-tag ts-flagOptional">Optional</code> <span class="tsd-kind-parameter">provider</span>: <span class="tsd-signature-type ">JsonRpcProvider</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type ">BrowserProvider</span></h5>
+<div class="tsd-comment tsd-typography"><p>ethers provider, optional;</p>
+</div>
+<div class="tsd-comment tsd-typography"></div></li>
+<li>
+<h5><span class="tsd-kind-parameter">chainId</span>: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 1</span></h5>
+<div class="tsd-comment tsd-typography"><p>chain Id - only necessary if provider is not provided</p>
 </div>
 <div class="tsd-comment tsd-typography"></div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../types/delegateTuple.html" class="tsd-signature-type tsd-kind-type-alias">delegateTuple</a><span class="tsd-signature-symbol">&gt;</span></h4><p>tuple</p>
 
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/MirrorWare-io/utils/blob/0a588a9/src/contracts.ts#L157">src/contracts.ts:157</a></li></ul></aside></li></ul></section></div>
+<li>Defined in <a href="https://github.com/MirrorWare-io/utils/blob/3189420/src/contracts.ts#L281">src/contracts.ts:281</a></li></ul></aside></li></ul></section></div>
 <div class="col-sidebar">
 <div class="page-menu">
 <div class="tsd-navigation settings">
@@ -68,14 +73,20 @@
 <li><a href="../variables/ChainNames-1.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-32"></use></svg><span>Chain<wbr/>Names</span></a></li>
 <li><a href="../variables/SUPPORTED_CHAIN_IDS.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-32"></use></svg><span>SUPPORTED_<wbr/>CHAIN_<wbr/>IDS</span></a></li>
 <li><a href="../variables/config-1.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-32"></use></svg><span>config</span></a></li>
-<li><a href="cleanAddress.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><g id="icon-64"><rect fill="var(--color-icon-background)" stroke="var(--color-ts-function)" stroke-width="1.5" x="1" y="1" width="22" height="22" rx="6"></rect><path d="M9.39 16V7.24H14.55V8.224H10.446V11.128H14.238V12.112H10.47V16H9.39Z" fill="var(--color-text)"></path></g></svg><span>clean<wbr/>Address</span></a></li>
+<li><a href="chainIDToName.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><g id="icon-64"><rect fill="var(--color-icon-background)" stroke="var(--color-ts-function)" stroke-width="1.5" x="1" y="1" width="22" height="22" rx="6"></rect><path d="M9.39 16V7.24H14.55V8.224H10.446V11.128H14.238V12.112H10.47V16H9.39Z" fill="var(--color-text)"></path></g></svg><span>chainIDTo<wbr/>Name</span></a></li>
+<li><a href="cleanAddress.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>clean<wbr/>Address</span></a></li>
 <li><a href="explorerLink.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>explorer<wbr/>Link</span></a></li>
 <li><a href="getABIByAddress.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>getABIBy<wbr/>Address</span></a></li>
 <li><a href="getCbContractsByChainId.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>get<wbr/>Cb<wbr/>Contracts<wbr/>By<wbr/>Chain<wbr/>Id</span></a></li>
 <li><a href="getContractsByChain.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>get<wbr/>Contracts<wbr/>By<wbr/>Chain</span></a></li>
 <li><a href="getDelegateContract.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>get<wbr/>Delegate<wbr/>Contract</span></a></li>
+<li><a href="getDelegateContractWithProvider.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>get<wbr/>Delegate<wbr/>Contract<wbr/>With<wbr/>Provider</span></a></li>
+<li><a href="getDelegateV2Contract.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>get<wbr/>Delegate<wbr/>V2<wbr/>Contract</span></a></li>
+<li><a href="getDelegateV2ContractWithProvider.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>get<wbr/>Delegate<wbr/>V2<wbr/>Contract<wbr/>With<wbr/>Provider</span></a></li>
 <li><a href="getMetadataForNFTs.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>get<wbr/>Metadata<wbr/>ForNFTs</span></a></li>
+<li><a href="getWalletFromALLDelegates.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>get<wbr/>Wallet<wbr/>FromALLDelegates</span></a></li>
 <li><a href="getWalletFromDelegate.html" class="current"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>get<wbr/>Wallet<wbr/>From<wbr/>Delegate</span></a></li>
+<li><a href="getWalletFromDelegateV2.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>get<wbr/>Wallet<wbr/>From<wbr/>Delegate<wbr/>V2</span></a></li>
 <li><a href="handleTransaction.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>handle<wbr/>Transaction</span></a></li>
 <li><a href="metadataURIByAddress.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>metadataURIBy<wbr/>Address</span></a></li>
 <li><a href="parseChain.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>parse<wbr/>Chain</span></a></li>

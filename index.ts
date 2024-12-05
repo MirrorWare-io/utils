@@ -13,7 +13,7 @@ export { AddressZero, truncateAddress, cleanAddress } from "./src/address";
 /**
  * Chains
  */
-export { ChainEnum, SUPPORTED_CHAIN_IDS, ChainNames, parseChain } from "./src/chains";
+export { ChainEnum, SUPPORTED_CHAIN_IDS, ChainNames, chainIDToName, parseChain } from "./src/chains";
 
 /**
  * Contracts

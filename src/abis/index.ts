@@ -9,6 +9,8 @@ import revealedAbi from "./revealed";
 import unrevealedAbi from "./unrevealedAbi";
 import betaClaimAbi from "./versionBetaClaim";
 import cyberbrokersAbi from "./cyberbrokers";
+import bioCanvasAbi from "./drifterBioCanvas";
+import dnaCardAbi from "./drifterDnaCard";
 import cyberbrokersMetadataAbi from "./cyberbrokerMetadata";
 import accoladeAbi from "./accolade";
 import accoladeClaimAbi from "./accoladeClaim";
@@ -27,5 +29,7 @@ export const ABIS = {
 	accoladeAbi,
 	delegateV2Abi,
 	accoladeClaimAbi,
+	dnaCardAbi,
+	bioCanvasAbi
 };
 export default ABIS

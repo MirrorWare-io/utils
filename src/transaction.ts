@@ -1,5 +1,5 @@
 import { TransactionReceipt, TransactionResponse } from "ethers";
-import { ChainEnum } from "./chains";
+import { ChainEnum, chainIDToName } from "./chains";
 
 type txError = {
 	hash?: string;
@@ -47,7 +47,18 @@ export async function handleTransaction(transaction: TransactionResponse) {
  * @returns A URL to etherscan for a given chain and transaction hash
  */
 export function explorerLink(chainid: number | ChainEnum, hash: string) {
-	return `https://${
-		chainid == 5 ? "goerli." : chainid == ChainEnum.SEPOLIA ? "sepolia." : ""
-	}etherscan.io/tx/${hash}`;
+
+	const name = chainIDToName(chainid);
+
+	switch (name) {
+		case 'base':
+			return `https://basescan.org/tx/${hash}`;
+		case 'baseSepolia':
+			return `https://sepolia.basescan.org/tx/${hash}`;	
+		default:
+			return `https://${
+				chainid == 5 ? "goerli." : chainid == ChainEnum.SEPOLIA ? "sepolia." : ""
+			}etherscan.io/tx/${hash}`;
+	}
+
 }

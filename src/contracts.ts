@@ -28,6 +28,9 @@ export function getCbContractsByChainId(chainId: number | ChainEnum) {
 			versionBetaClaim: "",
 			cyberbrokersAccolades: "0xbf28d6Db1b70A30BBb29F3d6d5698c07937337a1",
 			cyberbrokersAccoladesClaim: "0x24B4717ac5C0962b4D3f41765785b87C6DC50796",
+			drifterBioCanvasAddress: "",
+			drifterDNACardAddress: "",
+			drifterAddress: "",
 		};
 	} else if (chainId == ChainEnum.SEPOLIA) {
 
@@ -46,8 +49,51 @@ export function getCbContractsByChainId(chainId: number | ChainEnum) {
 			versionBetaClaim: "",
 			cyberbrokersAccolades: "",
 			cyberbrokersAccoladesClaim: "",
+			drifterBioCanvasAddress: "",
+			drifterDNACardAddress: "",
+			drifterAddress: "",
 		}
-	} else {
+	} else if (chainId == ChainEnum.BASE) {
+		return {
+			cyberBrokersAddress: "",
+			delegateAddress: "0x00000000000076A84feF008CDAbe6409d2FE638B",
+			delegateV2Address: "0x00000000000000447e69651d841bD8D104Bed493",
+			claimAddress: "",
+			unrevealedAddress: "", 
+			afterGlowAddress: "", //"",
+			afterGlowClaimAddress: "",
+			revealedAddress: "", //'',
+			swapAddress: "", //'',
+			mechAddress: "",
+			mechCrafter: "",
+			versionBetaClaim: "",
+			cyberbrokersAccolades: "",
+			cyberbrokersAccoladesClaim: "",
+			drifterBioCanvasAddress: "",
+			drifterDNACardAddress: "",
+			drifterAddress: "",
+		}
+	}  else if (chainId == ChainEnum.BASE_SEPOLIA) {
+		return {
+			cyberBrokersAddress: "",
+			delegateAddress: "0x00000000000076A84feF008CDAbe6409d2FE638B",
+			delegateV2Address: "0x00000000000000447e69651d841bD8D104Bed493",
+			claimAddress: "",
+			unrevealedAddress: "", 
+			afterGlowAddress: "", //"",
+			afterGlowClaimAddress: "",
+			revealedAddress: "", //'',
+			swapAddress: "", //'',
+			mechAddress: "",
+			mechCrafter: "",
+			versionBetaClaim: "",
+			cyberbrokersAccolades: "",
+			cyberbrokersAccoladesClaim: "",
+			drifterBioCanvasAddress: "",
+			drifterDNACardAddress: "",
+			drifterAddress: "",
+		}
+	}else {
 		// eth network by default
 		return {
 			cyberBrokersAddress: "0x892848074ddeA461A15f337250Da3ce55580CA85",
@@ -64,6 +110,9 @@ export function getCbContractsByChainId(chainId: number | ChainEnum) {
 			versionBetaClaim: "0xC770dC511953265372840293a63Aa67AF631f3a3",
 			cyberbrokersAccolades: "0x2310C58d808c4F7Be4C4982518Ab65d4e4505654",
 			cyberbrokersAccoladesClaim: "0x4b656aE2394116E084B0D28B34C47CC8052C2C45",
+			drifterBioCanvasAddress: "",
+			drifterDNACardAddress: "",
+			drifterAddress: "",
 		};
 	}
 }
@@ -95,6 +144,8 @@ export const getContractsByChain = async (signer: Signer) => {
 export const getABIByAddress = (address:string) => {
 	const ethAddresses = getCbContractsByChainId(1);
 	const goerliAddresses = getCbContractsByChainId(5);
+	const baseAddresses = getCbContractsByChainId(ChainEnum.BASE);
+	const baseSepoliaAddresses = getCbContractsByChainId(ChainEnum.BASE_SEPOLIA);
 	
 	switch (address.toLowerCase()) {
 		/* Mechs */
@@ -145,6 +196,14 @@ export const getABIByAddress = (address:string) => {
 		case ethAddresses.delegateV2Address.toLowerCase():
 		case goerliAddresses.delegateV2Address.toLowerCase():
 			return ABIS.delegateV2Abi;
+		/* Drifter DNA Card */
+		case baseAddresses.drifterDNACardAddress.toLowerCase():
+		case baseSepoliaAddresses.drifterDNACardAddress.toLowerCase():
+			return ABIS.dnaCardAbi;
+		/* Drifter Bio Canvas */
+		case baseAddresses.drifterBioCanvasAddress.toLowerCase():
+		case baseSepoliaAddresses.drifterBioCanvasAddress.toLowerCase():
+			return ABIS.bioCanvasAbi;
 		default:
 			return null
 	}

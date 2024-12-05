@@ -3,6 +3,7 @@ import cbMetadataJson from "../cb_metadata.json";
 import { afterglowByTokenId } from "./data/afterglow";
 import { unrevealedByTokenId } from "./data/unrevealed";
 import { fetchURI } from "./helpers";
+import { ChainEnum, chainIDToName } from "./chains";
 
 /**
  * Returns the URI for the metadata of a given contract; replace % with the token ID;
@@ -11,11 +12,13 @@ import { fetchURI } from "./helpers";
  * @returns
  */
 export const metadataURIByAddress = (contractAddress: string, chainId: number = 1) => {
-	const chain = chainId == 5 ? "goerli" : "eth";
+	const chain = chainIDToName(chainId);
 	const baseURI = `https://m.cyberbrokers.com/${chain}`;
 
-	const ethAddresses = getCbContractsByChainId(1);
-	const goerliAddresses = getCbContractsByChainId(5);
+	const ethAddresses = getCbContractsByChainId(ChainEnum.ETH);
+	const goerliAddresses = getCbContractsByChainId(ChainEnum.GOERLI);
+	const baseAddresses = getCbContractsByChainId(ChainEnum.BASE);
+	const baseSepoliaAddresses = getCbContractsByChainId(ChainEnum.BASE_SEPOLIA);
 	switch (contractAddress.toLowerCase()) {
 		case ethAddresses.cyberBrokersAddress.toLowerCase():
 		case goerliAddresses.cyberBrokersAddress.toLowerCase():
@@ -32,6 +35,12 @@ export const metadataURIByAddress = (contractAddress: string, chainId: number = 
 		case ethAddresses.revealedAddress.toLowerCase():
 		case goerliAddresses.revealedAddress.toLowerCase():
 			return `${baseURI}/part/%`;
+		case baseAddresses.drifterBioCanvasAddress.toLowerCase():
+		case baseSepoliaAddresses.drifterBioCanvasAddress.toLowerCase():
+			return `${baseURI}/biocanvas/%`;
+		case baseAddresses.drifterDNACardAddress.toLowerCase():
+		case baseSepoliaAddresses.drifterDNACardAddress.toLowerCase():
+			return `${baseURI}/dnaCard/%`;
 		default:
 			return null;
 	}
