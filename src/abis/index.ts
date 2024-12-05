@@ -11,6 +11,8 @@ import betaClaimAbi from "./versionBetaClaim";
 import cyberbrokersAbi from "./cyberbrokers";
 import bioCanvasAbi from "./drifterBioCanvas";
 import dnaCardAbi from "./drifterDnaCard";
+import dnaCardSaleAbi from "./drifterDnaCardSale";
+import bioCanvasSaleAbi from "./drifterBioCanvasSale";
 import cyberbrokersMetadataAbi from "./cyberbrokerMetadata";
 import accoladeAbi from "./accolade";
 import accoladeClaimAbi from "./accoladeClaim";
@@ -30,6 +32,8 @@ export const ABIS = {
 	delegateV2Abi,
 	accoladeClaimAbi,
 	dnaCardAbi,
-	bioCanvasAbi
+	bioCanvasAbi,
+	bioCanvasSaleAbi,
+	dnaCardSaleAbi
 };
 export default ABIS

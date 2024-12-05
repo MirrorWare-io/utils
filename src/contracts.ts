@@ -29,7 +29,9 @@ export function getCbContractsByChainId(chainId: number | ChainEnum) {
 			cyberbrokersAccolades: "0xbf28d6Db1b70A30BBb29F3d6d5698c07937337a1",
 			cyberbrokersAccoladesClaim: "0x24B4717ac5C0962b4D3f41765785b87C6DC50796",
 			drifterBioCanvasAddress: "",
+			drifterBioCanvasSaleAddress: "",
 			drifterDNACardAddress: "",
+			drifterDNACardSaleAddress: "",
 			drifterAddress: "",
 		};
 	} else if (chainId == ChainEnum.SEPOLIA) {
@@ -50,7 +52,9 @@ export function getCbContractsByChainId(chainId: number | ChainEnum) {
 			cyberbrokersAccolades: "",
 			cyberbrokersAccoladesClaim: "",
 			drifterBioCanvasAddress: "",
+			drifterBioCanvasSaleAddress: "",
 			drifterDNACardAddress: "",
+			drifterDNACardSaleAddress: "",
 			drifterAddress: "",
 		}
 	} else if (chainId == ChainEnum.BASE) {
@@ -70,7 +74,9 @@ export function getCbContractsByChainId(chainId: number | ChainEnum) {
 			cyberbrokersAccolades: "",
 			cyberbrokersAccoladesClaim: "",
 			drifterBioCanvasAddress: "",
+			drifterBioCanvasSaleAddress: "",
 			drifterDNACardAddress: "",
+			drifterDNACardSaleAddress: "",
 			drifterAddress: "",
 		}
 	}  else if (chainId == ChainEnum.BASE_SEPOLIA) {
@@ -90,7 +96,9 @@ export function getCbContractsByChainId(chainId: number | ChainEnum) {
 			cyberbrokersAccolades: "",
 			cyberbrokersAccoladesClaim: "",
 			drifterBioCanvasAddress: "",
+			drifterBioCanvasSaleAddress: "",
 			drifterDNACardAddress: "",
+			drifterDNACardSaleAddress: "",
 			drifterAddress: "",
 		}
 	}else {
@@ -111,7 +119,9 @@ export function getCbContractsByChainId(chainId: number | ChainEnum) {
 			cyberbrokersAccolades: "0x2310C58d808c4F7Be4C4982518Ab65d4e4505654",
 			cyberbrokersAccoladesClaim: "0x4b656aE2394116E084B0D28B34C47CC8052C2C45",
 			drifterBioCanvasAddress: "",
+			drifterBioCanvasSaleAddress: "",
 			drifterDNACardAddress: "",
+			drifterDNACardSaleAddress: "",
 			drifterAddress: "",
 		};
 	}
@@ -204,6 +214,18 @@ export const getABIByAddress = (address:string) => {
 		case baseAddresses.drifterBioCanvasAddress.toLowerCase():
 		case baseSepoliaAddresses.drifterBioCanvasAddress.toLowerCase():
 			return ABIS.bioCanvasAbi;
+		/* Drifter Bio Canvas Sale contract*/
+		case baseAddresses.drifterBioCanvasSaleAddress.toLowerCase():
+		case baseSepoliaAddresses.drifterBioCanvasSaleAddress.toLowerCase():
+			return ABIS.bioCanvasSaleAbi;
+		/* Drifter DNA card Sale Contract */
+		case baseAddresses.drifterDNACardSaleAddress.toLowerCase():
+		case baseSepoliaAddresses.drifterDNACardSaleAddress.toLowerCase():
+			return ABIS.dnaCardSaleAbi;
+		/* Drifter DNA card Sale Contract */
+		case baseAddresses.drifterAddress.toLowerCase():
+		case baseSepoliaAddresses.drifterAddress.toLowerCase():
+			throw new Error("Drifter contract ABI not found");
 		default:
 			return null
 	}
