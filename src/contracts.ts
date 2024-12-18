@@ -32,6 +32,7 @@ export function getCbContractsByChainId(chainId: number | ChainEnum) {
 			drifterBioCanvasSaleAddress: "",
 			drifterDNACardAddress: "",
 			drifterDNACardSaleAddress: "",
+			drifterGearAddress:"",
 			drifterAddress: "",
 		};
 	} else if (chainId == ChainEnum.SEPOLIA) {
@@ -55,6 +56,7 @@ export function getCbContractsByChainId(chainId: number | ChainEnum) {
 			drifterBioCanvasSaleAddress: "",
 			drifterDNACardAddress: "",
 			drifterDNACardSaleAddress: "",
+			drifterGearAddress:"",
 			drifterAddress: "",
 		}
 	} else if (chainId == ChainEnum.BASE) {
@@ -77,6 +79,7 @@ export function getCbContractsByChainId(chainId: number | ChainEnum) {
 			drifterBioCanvasSaleAddress: "",
 			drifterDNACardAddress: "",
 			drifterDNACardSaleAddress: "",
+			drifterGearAddress:"",
 			drifterAddress: "",
 		}
 	}  else if (chainId == ChainEnum.BASE_SEPOLIA) {
@@ -99,7 +102,8 @@ export function getCbContractsByChainId(chainId: number | ChainEnum) {
 			drifterBioCanvasSaleAddress: "",
 			drifterDNACardAddress: "",
 			drifterDNACardSaleAddress: "",
-			drifterAddress: "",
+			drifterGearAddress: "0x6bd405c4dfDf9a282b1b023cDeCD4a44cF97Af44",
+			drifterAddress: "0x3144415A16F7D1ce06Bd6256037aF3bBe2bB0228",
 		}
 	}else {
 		// eth network by default
@@ -122,6 +126,7 @@ export function getCbContractsByChainId(chainId: number | ChainEnum) {
 			drifterBioCanvasSaleAddress: "",
 			drifterDNACardAddress: "",
 			drifterDNACardSaleAddress: "",
+			drifterGearAddress:"",
 			drifterAddress: "",
 		};
 	}
@@ -223,9 +228,13 @@ export const getABIByAddress = (address:string) => {
 		case baseSepoliaAddresses.drifterDNACardSaleAddress.toLowerCase():
 			return ABIS.dnaCardSaleAbi;
 		/* Drifter DNA card Sale Contract */
+		case baseAddresses.drifterGearAddress.toLowerCase():
+		case baseSepoliaAddresses.drifterGearAddress.toLowerCase():
+			return ABIS.drifterGearAbi;
+		/* Drifter DNA card Sale Contract */
 		case baseAddresses.drifterAddress.toLowerCase():
 		case baseSepoliaAddresses.drifterAddress.toLowerCase():
-			throw new Error("Drifter contract ABI not found");
+			return ABIS.drifterAbi;
 		default:
 			return null
 	}
