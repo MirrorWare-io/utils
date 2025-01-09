@@ -33,6 +33,7 @@ export function getCbContractsByChainId(chainId: number | ChainEnum) {
 			drifterDNACardAddress: "",
 			drifterDNACardSaleAddress: "",
 			drifterDNACardRevealAddress: "",
+			drifterDNACardOpened:"",
 			drifterGearAddress:"",
 			drifterGearClaim:"",
 			drifterAddress: "",
@@ -59,6 +60,7 @@ export function getCbContractsByChainId(chainId: number | ChainEnum) {
 			drifterDNACardAddress: "",
 			drifterDNACardSaleAddress: "",
 			drifterDNACardRevealAddress: "",
+			drifterDNACardOpened:"",
 			drifterGearAddress:"",
 			drifterGearClaim:"",
 			drifterAddress: "",
@@ -84,6 +86,7 @@ export function getCbContractsByChainId(chainId: number | ChainEnum) {
 			drifterDNACardAddress: "",
 			drifterDNACardSaleAddress: "",
 			drifterDNACardRevealAddress: "",
+			drifterDNACardOpened:"",
 			drifterGearAddress:"",
 			drifterGearClaim:"",
 			drifterAddress: "",
@@ -136,6 +139,7 @@ export function getCbContractsByChainId(chainId: number | ChainEnum) {
 			drifterDNACardAddress: "",
 			drifterDNACardSaleAddress: "",
 			drifterDNACardRevealAddress: "",
+			drifterDNACardOpened:"",
 			drifterGearAddress:"",
 			drifterGearClaim:"",
 			drifterAddress: "",
@@ -238,6 +242,10 @@ export const getABIByAddress = (address:string) => {
 		case baseAddresses.drifterDNACardRevealAddress.toLowerCase():
 		case baseSepoliaAddresses.drifterDNACardRevealAddress.toLowerCase():
 			return ABIS.dnaCardRevealAbi;
+		/* Drifter DNA card Opened Contract */
+		case baseAddresses.drifterDNACardOpened.toLowerCase():
+		case baseSepoliaAddresses.drifterDNACardOpened.toLowerCase():
+			return ABIS.dnaCardOpenedAbi;
 		/* Drifter Gear Contract */
 		case baseAddresses.drifterGearAddress.toLowerCase():
 		case baseSepoliaAddresses.drifterGearAddress.toLowerCase():
