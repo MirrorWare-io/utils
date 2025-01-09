@@ -12,11 +12,13 @@ import cyberbrokersAbi from "./cyberbrokers";
 import bioCanvasAbi from "./drifterBioCanvas";
 import dnaCardAbi from "./drifterDnaCard";
 import dnaCardSaleAbi from "./drifterDnaCardSale";
+import dnaCardRevealAbi from "./drifterDnaCardReveal";
 import bioCanvasSaleAbi from "./drifterBioCanvasSale";
 import cyberbrokersMetadataAbi from "./cyberbrokerMetadata";
 import accoladeAbi from "./accolade";
 import accoladeClaimAbi from "./accoladeClaim";
 import drifterGearAbi from "./drifterGear";
+import drifterGearClaimAbi from "./drifterGearClaim";
 import drifterAbi from "./drifterAbi";
 export const ABIS = {
 	delegateAbi,
@@ -36,7 +38,9 @@ export const ABIS = {
 	dnaCardAbi,
 	bioCanvasAbi,
 	bioCanvasSaleAbi,
+	dnaCardRevealAbi,
 	drifterGearAbi,
+	drifterGearClaimAbi,
 	drifterAbi,
 	dnaCardSaleAbi
 };
