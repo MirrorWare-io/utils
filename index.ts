@@ -1,8 +1,8 @@
-import config,{Config} from "./src/config";
+
 export {
 	config,
 	Config
-}
+} from "./src/config";
 
 /**
  * Address

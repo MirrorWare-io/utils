@@ -42,6 +42,7 @@ export const parseChain = (chain: string): ChainEnum | number => {
 		case "mainnet":
 		case "ethereum":
 		case "homestead":
+		case "eth-mainnet":
 			return ChainEnum.ETH;
 		case "goerli":
 			return ChainEnum.GOERLI;

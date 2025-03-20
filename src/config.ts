@@ -10,9 +10,9 @@ export interface Config {
 	};
 }
 
-const config: Config & { setConfig: (config: Subset<Config>) => void; } = {
+export const config: Config & { setConfig: (config: Subset<Config>) => void; } = {
 	setConfig: (_config: Subset<Config>) => {
-		Object.assign(config, _config);
+		Object.assign(_config, _config);
 	},
 	infura: {
 		key: "",
