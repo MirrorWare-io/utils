@@ -1,5 +1,5 @@
 import { ChainEnum } from "../src/chains";
-import config from "../src/config";
+import {config} from "../src/config";
 import { getWalletFromALLDelegates } from "../src/contracts";
 
 /**

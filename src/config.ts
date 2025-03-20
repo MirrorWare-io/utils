@@ -23,5 +23,3 @@ export const config: Config & { setConfig: (config: Subset<Config>) => void; } =
 		eth_key: "",
 	},
 };
-
-export default config;

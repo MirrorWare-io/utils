@@ -1,6 +1,6 @@
 import { Contract, Signer, BrowserProvider, JsonRpcProvider, AlchemyProvider, InfuraProvider } from "ethers";
 import delegateAbi from "./abis/delegateAbi";
-import config from "./config";
+import {config} from "./config";
 import { delegateTuple, delegateV2Tuple } from "./types";
 import { ChainEnum } from "./chains";
 import { ABIS } from "./abis";
