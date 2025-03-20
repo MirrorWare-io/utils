@@ -12,7 +12,7 @@ export interface Config {
 
 export const config: Config & { setConfig: (config: Subset<Config>) => void; } = {
 	setConfig: (_config: Subset<Config>) => {
-		Object.assign(_config, _config);
+		Object.assign(config, _config);
 	},
 	infura: {
 		key: "",
