@@ -2,7 +2,7 @@ export default [
   {
     "inputs": [
       {
-        "internalType": "address",
+        "internalType": "address payable",
         "name": "royaltyReceiver_",
         "type": "address"
       },
@@ -17,7 +17,7 @@ export default [
         "type": "string"
       },
       {
-        "internalType": "address",
+        "internalType": "address payable",
         "name": "dnaCardAddress_",
         "type": "address"
       }
@@ -226,6 +226,19 @@ export default [
         "internalType": "address",
         "name": "",
         "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "ROYALTY_FEE_NUMERATOR",
+    "outputs": [
+      {
+        "internalType": "uint96",
+        "name": "",
+        "type": "uint96"
       }
     ],
     "stateMutability": "view",
@@ -611,11 +624,52 @@ export default [
     "inputs": [
       {
         "internalType": "address",
+        "name": "receiver",
+        "type": "address"
+      },
+      {
+        "internalType": "uint96",
+        "name": "feeNumerator",
+        "type": "uint96"
+      }
+    ],
+    "name": "setDefaultRoyalty",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address payable",
         "name": "dnaCardAddress",
         "type": "address"
       }
     ],
     "name": "setDnaCardAddress",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "receiver",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "tokenId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint96",
+        "name": "feeNumerator",
+        "type": "uint96"
+      }
+    ],
+    "name": "setTokenRoyalty",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -732,5 +786,9 @@ export default [
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
+  },
+  {
+    "stateMutability": "payable",
+    "type": "receive"
   }
 ]

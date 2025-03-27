@@ -2,7 +2,7 @@ export default [
   {
     "inputs": [
       {
-        "internalType": "address",
+        "internalType": "address payable",
         "name": "gearContractAddress_",
         "type": "address"
       }
@@ -97,6 +97,19 @@ export default [
   {
     "inputs": [],
     "name": "SELECTION_TIME_LIMIT",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "SELECTION_TIME_LIMIT_BUFFER",
     "outputs": [
       {
         "internalType": "uint256",
@@ -520,7 +533,7 @@ export default [
   {
     "inputs": [
       {
-        "internalType": "address",
+        "internalType": "address payable",
         "name": "gearContractAddress",
         "type": "address"
       }
@@ -542,5 +555,9 @@ export default [
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
+  },
+  {
+    "stateMutability": "payable",
+    "type": "receive"
   }
 ]

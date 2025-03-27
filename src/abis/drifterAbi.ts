@@ -12,18 +12,33 @@ export default [
         "type": "string"
       },
       {
-        "internalType": "address",
+        "internalType": "address payable",
         "name": "bioCanvasAddress_",
         "type": "address"
       },
       {
-        "internalType": "address",
+        "internalType": "address payable",
         "name": "gearAddress_",
+        "type": "address"
+      },
+      {
+        "internalType": "address payable",
+        "name": "royaltyReceiver_",
         "type": "address"
       }
     ],
     "stateMutability": "nonpayable",
     "type": "constructor"
+  },
+  {
+    "inputs": [],
+    "name": "CreatorTokenBase__InvalidTransferValidatorContract",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "ShouldNotMintToBurnAddress",
+    "type": "error"
   },
   {
     "anonymous": false,
@@ -73,6 +88,38 @@ export default [
       }
     ],
     "name": "ApprovalForAll",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "bool",
+        "name": "autoApproved",
+        "type": "bool"
+      }
+    ],
+    "name": "AutomaticApprovalOfTransferValidatorSet",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "receiver",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint96",
+        "name": "feeNumerator",
+        "type": "uint96"
+      }
+    ],
+    "name": "DefaultRoyaltySet",
     "type": "event"
   },
   {
@@ -210,6 +257,31 @@ export default [
     "inputs": [
       {
         "indexed": true,
+        "internalType": "uint256",
+        "name": "tokenId",
+        "type": "uint256"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "receiver",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint96",
+        "name": "feeNumerator",
+        "type": "uint96"
+      }
+    ],
+    "name": "TokenRoyaltySet",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
         "internalType": "address",
         "name": "from",
         "type": "address"
@@ -231,16 +303,48 @@ export default [
     "type": "event"
   },
   {
+    "anonymous": false,
     "inputs": [
       {
-        "internalType": "string",
-        "name": "name",
-        "type": "string"
+        "indexed": false,
+        "internalType": "address",
+        "name": "oldValidator",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "newValidator",
+        "type": "address"
       }
     ],
-    "name": "addDisallowedName",
-    "outputs": [],
-    "stateMutability": "nonpayable",
+    "name": "TransferValidatorUpdated",
+    "type": "event"
+  },
+  {
+    "inputs": [],
+    "name": "DEFAULT_TRANSFER_VALIDATOR",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "ROYALTY_FEE_NUMERATOR",
+    "outputs": [
+      {
+        "internalType": "uint96",
+        "name": "",
+        "type": "uint96"
+      }
+    ],
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -252,19 +356,6 @@ export default [
       }
     ],
     "name": "addDisallowedNames",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "string",
-        "name": "name",
-        "type": "string"
-      }
-    ],
-    "name": "addName",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -285,12 +376,12 @@ export default [
   {
     "inputs": [
       {
-        "internalType": "string",
-        "name": "word",
-        "type": "string"
+        "internalType": "bytes32",
+        "name": "promoCodeHash",
+        "type": "bytes32"
       }
     ],
-    "name": "addRestrictedWord",
+    "name": "addPromoCodeHash",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -324,6 +415,19 @@ export default [
     "name": "approve",
     "outputs": [],
     "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "autoApproveTransfersFromValidator",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -430,6 +534,11 @@ export default [
         "internalType": "string",
         "name": "expectedName",
         "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "promoCode",
+        "type": "string"
       }
     ],
     "name": "createDrifter",
@@ -457,6 +566,25 @@ export default [
         "internalType": "bool",
         "name": "",
         "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "drifterAttributeCount",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
       }
     ],
     "stateMutability": "view",
@@ -505,6 +633,44 @@ export default [
         "internalType": "uint256",
         "name": "",
         "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "drifterNamePricesETH",
+    "outputs": [
+      {
+        "internalType": "uint64",
+        "name": "",
+        "type": "uint64"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "drifterNamePricesUSDC",
+    "outputs": [
+      {
+        "internalType": "uint64",
+        "name": "",
+        "type": "uint64"
       }
     ],
     "stateMutability": "view",
@@ -709,6 +875,11 @@ export default [
         "internalType": "string",
         "name": "name",
         "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "paymentMethod",
+        "type": "string"
       }
     ],
     "name": "getNameCreationCost",
@@ -719,7 +890,38 @@ export default [
         "type": "uint256"
       }
     ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getTransferValidationFunction",
+    "outputs": [
+      {
+        "internalType": "bytes4",
+        "name": "functionSignature",
+        "type": "bytes4"
+      },
+      {
+        "internalType": "bool",
+        "name": "isViewFunction",
+        "type": "bool"
+      }
+    ],
     "stateMutability": "pure",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getTransferValidator",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "validator",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -736,6 +938,25 @@ export default [
       }
     ],
     "name": "isApprovedForAll",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "isApproved",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "promoCode",
+        "type": "string"
+      }
+    ],
+    "name": "isValidUnusedPromoCode",
     "outputs": [
       {
         "internalType": "bool",
@@ -902,6 +1123,38 @@ export default [
     "type": "function"
   },
   {
+    "inputs": [
+      {
+        "internalType": "bytes32",
+        "name": "",
+        "type": "bytes32"
+      }
+    ],
+    "name": "promoCodesUsed",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bytes32",
+        "name": "promoCodeHash",
+        "type": "bytes32"
+      }
+    ],
+    "name": "removePromoCodeHash",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
     "inputs": [],
     "name": "renounceOwnership",
     "outputs": [],
@@ -946,6 +1199,35 @@ export default [
         "internalType": "string",
         "name": "",
         "type": "string"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_tokenId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_salePrice",
+        "type": "uint256"
+      }
+    ],
+    "name": "royaltyInfo",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
       }
     ],
     "stateMutability": "view",
@@ -1023,12 +1305,43 @@ export default [
   {
     "inputs": [
       {
+        "internalType": "bool",
+        "name": "autoApprove",
+        "type": "bool"
+      }
+    ],
+    "name": "setAutomaticApprovalOfTransfersFromValidator",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
         "internalType": "string",
         "name": "newBaseURI",
         "type": "string"
       }
     ],
     "name": "setBaseURI",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "receiver",
+        "type": "address"
+      },
+      {
+        "internalType": "uint96",
+        "name": "feeNumerator",
+        "type": "uint96"
+      }
+    ],
+    "name": "setDefaultRoyalty",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -1044,11 +1357,88 @@ export default [
         "internalType": "string",
         "name": "name",
         "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "promoCode",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "paymentMethod",
+        "type": "string"
       }
     ],
     "name": "setDrifterName",
     "outputs": [],
     "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint64[]",
+        "name": "ethPrices",
+        "type": "uint64[]"
+      },
+      {
+        "internalType": "uint64[]",
+        "name": "usdcPrices",
+        "type": "uint64[]"
+      }
+    ],
+    "name": "setDrifterNamePrices",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "receiver",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "tokenId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint96",
+        "name": "feeNumerator",
+        "type": "uint96"
+      }
+    ],
+    "name": "setTokenRoyalty",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "transferValidator_",
+        "type": "address"
+      }
+    ],
+    "name": "setTransferValidator",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_newUsdcAddress",
+        "type": "address"
+      }
+    ],
+    "name": "setUsdcAddress",
+    "outputs": [],
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1152,6 +1542,19 @@ export default [
     "type": "function"
   },
   {
+    "inputs": [],
+    "name": "usdcContract",
+    "outputs": [
+      {
+        "internalType": "contract IERC20",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [
       {
         "internalType": "string",
@@ -1171,10 +1574,40 @@ export default [
     "type": "function"
   },
   {
+    "inputs": [
+      {
+        "internalType": "bytes32",
+        "name": "",
+        "type": "bytes32"
+      }
+    ],
+    "name": "validPromoCodes",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [],
     "name": "withdraw",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "withdrawUsdc",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "stateMutability": "payable",
+    "type": "receive"
   }
 ]

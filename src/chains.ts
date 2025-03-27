@@ -45,13 +45,14 @@ export const parseChain = (chain: string): ChainEnum | number => {
 		case "eth-mainnet":
 			return ChainEnum.ETH;
 		case "goerli":
-			return ChainEnum.GOERLI;
+				return ChainEnum.GOERLI;
 		case "testnet":
 		case "sepolia":
 			return ChainEnum.SEPOLIA;
 		case "base":
 			return ChainEnum.BASE;
 		case "baseSepolia":
+		case "base-sepolia":
 			return ChainEnum.BASE_SEPOLIA;
 		default:
 			return ChainEnum.ETH;

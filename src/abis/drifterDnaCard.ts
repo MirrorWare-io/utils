@@ -17,12 +17,12 @@ export default [
         "type": "string"
       },
       {
-        "internalType": "address",
+        "internalType": "address payable",
         "name": "gearContractAddress_",
         "type": "address"
       },
       {
-        "internalType": "address",
+        "internalType": "address payable",
         "name": "dnaCardRevealAddress_",
         "type": "address"
       }
@@ -262,6 +262,25 @@ export default [
     "type": "function"
   },
   {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "DNA_CARD_MINTER_ADDRESSES",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [],
     "name": "LARGE_SUPPLY",
     "outputs": [
@@ -289,12 +308,12 @@ export default [
   },
   {
     "inputs": [],
-    "name": "SALE_ADDRESS",
+    "name": "ROYALTY_FEE_NUMERATOR",
     "outputs": [
       {
-        "internalType": "address",
+        "internalType": "uint96",
         "name": "",
-        "type": "address"
+        "type": "uint96"
       }
     ],
     "stateMutability": "view",
@@ -324,6 +343,19 @@ export default [
       }
     ],
     "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "minterAddress",
+        "type": "address"
+      }
+    ],
+    "name": "addDnaCardMinter",
+    "outputs": [],
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -738,18 +770,19 @@ export default [
         "type": "address"
       },
       {
-        "internalType": "uint256",
-        "name": "tokenId",
-        "type": "uint256"
-      },
-      {
         "internalType": "uint8",
         "name": "cardSize",
         "type": "uint8"
       }
     ],
     "name": "mint",
-    "outputs": [],
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
     "stateMutability": "nonpayable",
     "type": "function"
   },
@@ -796,6 +829,19 @@ export default [
       }
     ],
     "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "minterAddress",
+        "type": "address"
+      }
+    ],
+    "name": "removeDnaCardMinter",
+    "outputs": [],
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -965,6 +1011,24 @@ export default [
     "inputs": [
       {
         "internalType": "address",
+        "name": "receiver",
+        "type": "address"
+      },
+      {
+        "internalType": "uint96",
+        "name": "feeNumerator",
+        "type": "uint96"
+      }
+    ],
+    "name": "setDefaultRoyalty",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address payable",
         "name": "dnaCardOpenedAddress",
         "type": "address"
       }
@@ -977,7 +1041,7 @@ export default [
   {
     "inputs": [
       {
-        "internalType": "address",
+        "internalType": "address payable",
         "name": "dnaCardRevealAddress",
         "type": "address"
       }
@@ -990,7 +1054,7 @@ export default [
   {
     "inputs": [
       {
-        "internalType": "address",
+        "internalType": "address payable",
         "name": "gearContractAddress",
         "type": "address"
       }
@@ -1004,11 +1068,21 @@ export default [
     "inputs": [
       {
         "internalType": "address",
-        "name": "saleAddress",
+        "name": "receiver",
         "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "tokenId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint96",
+        "name": "feeNumerator",
+        "type": "uint96"
       }
     ],
-    "name": "setSaleAddress",
+    "name": "setTokenRoyalty",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -1138,5 +1212,9 @@ export default [
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
+  },
+  {
+    "stateMutability": "payable",
+    "type": "receive"
   }
 ]

@@ -5,10 +5,45 @@ export default [
         "internalType": "string",
         "name": "_baseURI",
         "type": "string"
+      },
+      {
+        "internalType": "address",
+        "name": "_royaltyReceiver",
+        "type": "address"
       }
     ],
     "stateMutability": "nonpayable",
     "type": "constructor"
+  },
+  {
+    "inputs": [],
+    "name": "CreatorTokenBase__InvalidTransferValidatorContract",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "ShouldNotMintToBurnAddress",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "SplitRoyalties__InvalidRoyaltyReceiver",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "SplitRoyalties__NoRecipientsProvided",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "SplitRoyalties__RoyaltyFeeWillExceedSalePrice",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "SplitRoyalties__TokenRoyaltyNotInitialized",
+    "type": "error"
   },
   {
     "anonymous": false,
@@ -39,6 +74,38 @@ export default [
     "anonymous": false,
     "inputs": [
       {
+        "indexed": false,
+        "internalType": "bool",
+        "name": "autoApproved",
+        "type": "bool"
+      }
+    ],
+    "name": "AutomaticApprovalOfTransferValidatorSet",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "receiver",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint96",
+        "name": "feeNumerator",
+        "type": "uint96"
+      }
+    ],
+    "name": "DefaultRoyaltySet",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
         "indexed": true,
         "internalType": "address",
         "name": "previousOwner",
@@ -52,6 +119,50 @@ export default [
       }
     ],
     "name": "OwnershipTransferred",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "tokenId",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "address[]",
+        "name": "recipients",
+        "type": "address[]"
+      }
+    ],
+    "name": "TokenRoyaltyRecipientsUpdated",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "tokenId",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint96",
+        "name": "feeNumerator",
+        "type": "uint96"
+      },
+      {
+        "indexed": false,
+        "internalType": "address[]",
+        "name": "recipients",
+        "type": "address[]"
+      }
+    ],
+    "name": "TokenRoyaltySet",
     "type": "event"
   },
   {
@@ -133,6 +244,25 @@ export default [
     "inputs": [
       {
         "indexed": false,
+        "internalType": "address",
+        "name": "oldValidator",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "newValidator",
+        "type": "address"
+      }
+    ],
+    "name": "TransferValidatorUpdated",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
         "internalType": "string",
         "name": "value",
         "type": "string"
@@ -149,7 +279,7 @@ export default [
   },
   {
     "inputs": [],
-    "name": "DNA_CARD_REVEAL_ADDRESS",
+    "name": "DEFAULT_TRANSFER_VALIDATOR",
     "outputs": [
       {
         "internalType": "address",
@@ -175,7 +305,26 @@ export default [
   },
   {
     "inputs": [],
-    "name": "GEAR_CLAIM_ADDRESS",
+    "name": "FEE_DENOMINATOR",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "GEAR_MINTER_ADDRESSES",
     "outputs": [
       {
         "internalType": "address",
@@ -197,6 +346,19 @@ export default [
       }
     ],
     "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "minterAddress",
+        "type": "address"
+      }
+    ],
+    "name": "addGearMinter",
+    "outputs": [],
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -237,6 +399,19 @@ export default [
       {
         "internalType": "bool",
         "name": "inDnaCardPack",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "autoApproveTransfersFromValidator",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
         "type": "bool"
       }
     ],
@@ -299,6 +474,35 @@ export default [
         "internalType": "string",
         "name": "",
         "type": "string"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "tokenId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "salePrice",
+        "type": "uint256"
+      }
+    ],
+    "name": "calculateRoyaltyPerRecipient",
+    "outputs": [
+      {
+        "internalType": "address[]",
+        "name": "recipients",
+        "type": "address[]"
+      },
+      {
+        "internalType": "uint256[]",
+        "name": "amounts",
+        "type": "uint256[]"
       }
     ],
     "stateMutability": "view",
@@ -529,6 +733,63 @@ export default [
   {
     "inputs": [
       {
+        "internalType": "uint256",
+        "name": "assetId",
+        "type": "uint256"
+      }
+    ],
+    "name": "getAssetCategory",
+    "outputs": [
+      {
+        "internalType": "string",
+        "name": "",
+        "type": "string"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "assetId",
+        "type": "uint256"
+      }
+    ],
+    "name": "getAssetRarity",
+    "outputs": [
+      {
+        "internalType": "enum DrifterAssetMetadata.Rarity",
+        "name": "",
+        "type": "uint8"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "index",
+        "type": "uint256"
+      }
+    ],
+    "name": "getCategory",
+    "outputs": [
+      {
+        "internalType": "string",
+        "name": "",
+        "type": "string"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
         "internalType": "string",
         "name": "category",
         "type": "string"
@@ -564,6 +825,25 @@ export default [
         "internalType": "uint256[]",
         "name": "",
         "type": "uint256[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "index",
+        "type": "uint256"
+      }
+    ],
+    "name": "getCategoryByIndex",
+    "outputs": [
+      {
+        "internalType": "string",
+        "name": "",
+        "type": "string"
       }
     ],
     "stateMutability": "view",
@@ -620,6 +900,24 @@ export default [
         "internalType": "uint256[]",
         "name": "",
         "type": "uint256[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getDefaultRoyaltyInfo",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "receiver",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "feeNumerator",
+        "type": "uint256"
       }
     ],
     "stateMutability": "view",
@@ -704,6 +1002,92 @@ export default [
   {
     "inputs": [
       {
+        "internalType": "uint256",
+        "name": "tokenId",
+        "type": "uint256"
+      }
+    ],
+    "name": "getTokenRoyaltyInfo",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "feeNumerator",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address[]",
+        "name": "recipients",
+        "type": "address[]"
+      },
+      {
+        "internalType": "bool",
+        "name": "initialized",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getTotalAssets",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getTotalNFTAssets",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getTransferValidationFunction",
+    "outputs": [
+      {
+        "internalType": "bytes4",
+        "name": "functionSignature",
+        "type": "bytes4"
+      },
+      {
+        "internalType": "bool",
+        "name": "isViewFunction",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "pure",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getTransferValidator",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "validator",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
         "internalType": "address",
         "name": "account",
         "type": "address"
@@ -734,6 +1118,25 @@ export default [
       }
     ],
     "name": "isNonNFT",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "pure",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "assetId",
+        "type": "uint256"
+      }
+    ],
+    "name": "isNonNFTAsset",
     "outputs": [
       {
         "internalType": "bool",
@@ -842,10 +1245,52 @@ export default [
     "type": "function"
   },
   {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "minterAddress",
+        "type": "address"
+      }
+    ],
+    "name": "removeGearMinter",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
     "inputs": [],
     "name": "renounceOwnership",
     "outputs": [],
     "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "tokenId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "salePrice",
+        "type": "uint256"
+      }
+    ],
+    "name": "royaltyInfo",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "receiver",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "royaltyAmount",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -935,12 +1380,12 @@ export default [
   {
     "inputs": [
       {
-        "internalType": "string",
-        "name": "_baseURI",
-        "type": "string"
+        "internalType": "bool",
+        "name": "autoApprove",
+        "type": "bool"
       }
     ],
-    "name": "setBaseURI",
+    "name": "setAutomaticApprovalOfTransfersFromValidator",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -948,12 +1393,12 @@ export default [
   {
     "inputs": [
       {
-        "internalType": "address",
-        "name": "dnaCardRevealAddress",
-        "type": "address"
+        "internalType": "string",
+        "name": "_baseURI",
+        "type": "string"
       }
     ],
-    "name": "setDnaCardRevealAddress",
+    "name": "setBaseURI",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -974,12 +1419,48 @@ export default [
   {
     "inputs": [
       {
+        "internalType": "uint256",
+        "name": "tokenId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address[]",
+        "name": "recipients",
+        "type": "address[]"
+      }
+    ],
+    "name": "setTokenSplitRoyalty",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256[]",
+        "name": "tokenIds",
+        "type": "uint256[]"
+      },
+      {
+        "internalType": "address[]",
+        "name": "recipients",
+        "type": "address[]"
+      }
+    ],
+    "name": "setTokenSplitRoyaltyBatch",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
         "internalType": "address",
-        "name": "gearClaimAddress",
+        "name": "transferValidator_",
         "type": "address"
       }
     ],
-    "name": "setGearClaimAddress",
+    "name": "setTransferValidator",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -1092,5 +1573,9 @@ export default [
     ],
     "stateMutability": "view",
     "type": "function"
+  },
+  {
+    "stateMutability": "payable",
+    "type": "receive"
   }
 ]

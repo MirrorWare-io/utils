@@ -3,12 +3,27 @@ export default [
     "inputs": [
       {
         "internalType": "string",
-        "name": "_baseURI",
+        "name": "uri_",
         "type": "string"
+      },
+      {
+        "internalType": "address",
+        "name": "_royaltyReceiver",
+        "type": "address"
       }
     ],
     "stateMutability": "nonpayable",
     "type": "constructor"
+  },
+  {
+    "inputs": [],
+    "name": "CreatorTokenBase__InvalidTransferValidatorContract",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "ShouldNotMintToBurnAddress",
+    "type": "error"
   },
   {
     "anonymous": false,
@@ -39,6 +54,38 @@ export default [
     "anonymous": false,
     "inputs": [
       {
+        "indexed": false,
+        "internalType": "bool",
+        "name": "autoApproved",
+        "type": "bool"
+      }
+    ],
+    "name": "AutomaticApprovalOfTransferValidatorSet",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "receiver",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint96",
+        "name": "feeNumerator",
+        "type": "uint96"
+      }
+    ],
+    "name": "DefaultRoyaltySet",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
         "indexed": true,
         "internalType": "address",
         "name": "previousOwner",
@@ -52,6 +99,31 @@ export default [
       }
     ],
     "name": "OwnershipTransferred",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "tokenId",
+        "type": "uint256"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "receiver",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint96",
+        "name": "feeNumerator",
+        "type": "uint96"
+      }
+    ],
+    "name": "TokenRoyaltySet",
     "type": "event"
   },
   {
@@ -133,6 +205,25 @@ export default [
     "inputs": [
       {
         "indexed": false,
+        "internalType": "address",
+        "name": "oldValidator",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "newValidator",
+        "type": "address"
+      }
+    ],
+    "name": "TransferValidatorUpdated",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
         "internalType": "string",
         "name": "value",
         "type": "string"
@@ -148,8 +239,27 @@ export default [
     "type": "event"
   },
   {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "BIO_CANVAS_MINTER_ADDRESSES",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [],
-    "name": "DNA_CARD_SALE_ADDRESS",
+    "name": "DEFAULT_TRANSFER_VALIDATOR",
     "outputs": [
       {
         "internalType": "address",
@@ -175,12 +285,38 @@ export default [
   },
   {
     "inputs": [],
-    "name": "SALE_ADDRESS",
+    "name": "ROYALTY_FEE_NUMERATOR",
     "outputs": [
       {
-        "internalType": "address",
+        "internalType": "uint96",
         "name": "",
+        "type": "uint96"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "minterAddress",
         "type": "address"
+      }
+    ],
+    "name": "addBioCanvasMinter",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "autoApproveTransfersFromValidator",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
       }
     ],
     "stateMutability": "view",
@@ -277,10 +413,41 @@ export default [
     "type": "function"
   },
   {
+    "inputs": [],
+    "name": "getTransferValidationFunction",
+    "outputs": [
+      {
+        "internalType": "bytes4",
+        "name": "functionSignature",
+        "type": "bytes4"
+      },
+      {
+        "internalType": "bool",
+        "name": "isViewFunction",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "pure",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getTransferValidator",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "validator",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [
       {
         "internalType": "address",
-        "name": "account",
+        "name": "owner",
         "type": "address"
       },
       {
@@ -293,7 +460,7 @@ export default [
     "outputs": [
       {
         "internalType": "bool",
-        "name": "",
+        "name": "isApproved",
         "type": "bool"
       }
     ],
@@ -363,10 +530,52 @@ export default [
     "type": "function"
   },
   {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "minterAddress",
+        "type": "address"
+      }
+    ],
+    "name": "removeBioCanvasMinter",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
     "inputs": [],
     "name": "renounceOwnership",
     "outputs": [],
     "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_tokenId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_salePrice",
+        "type": "uint256"
+      }
+    ],
+    "name": "royaltyInfo",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -456,6 +665,19 @@ export default [
   {
     "inputs": [
       {
+        "internalType": "bool",
+        "name": "autoApprove",
+        "type": "bool"
+      }
+    ],
+    "name": "setAutomaticApprovalOfTransfersFromValidator",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
         "internalType": "string",
         "name": "_baseURI",
         "type": "string"
@@ -470,11 +692,16 @@ export default [
     "inputs": [
       {
         "internalType": "address",
-        "name": "saleAddress",
+        "name": "receiver",
         "type": "address"
+      },
+      {
+        "internalType": "uint96",
+        "name": "feeNumerator",
+        "type": "uint96"
       }
     ],
-    "name": "setDnaSaleAddress",
+    "name": "setDefaultRoyalty",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -496,11 +723,34 @@ export default [
     "inputs": [
       {
         "internalType": "address",
-        "name": "saleAddress",
+        "name": "receiver",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "tokenId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint96",
+        "name": "feeNumerator",
+        "type": "uint96"
+      }
+    ],
+    "name": "setTokenRoyalty",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "transferValidator_",
         "type": "address"
       }
     ],
-    "name": "setSaleAddress",
+    "name": "setTransferValidator",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -581,5 +831,9 @@ export default [
     ],
     "stateMutability": "view",
     "type": "function"
+  },
+  {
+    "stateMutability": "payable",
+    "type": "receive"
   }
 ]
