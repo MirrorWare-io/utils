@@ -114,7 +114,7 @@ export function getCbContractsByChainId(chainId: number | ChainEnum) {
 			drifterDNACardRevealAddress: "0x9eE87dB1486946178Af55D501399101811698bf8",
 			drifterDNACardOpened:"0xffD3237d36d4067b2D06C40B2EFAadD084eCF7dD",
 			drifterGearAddress: "0xDCD4663B0E8F6665f5f1c080B71Fd767f1b088cd",
-			drifterGearClaim:"0xe16Efb7b76950771c69eD112731ed00B77554683",
+			drifterGearClaim:"0xA802B6E47F0CA96e746236d24b3c8EB03C0174b3",
 			drifterAddress: "0xcd5B19f6B8562fa85f77eb55C44C570743ad520d",
 		}
 	}else {
