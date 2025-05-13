@@ -33,7 +33,7 @@ export function getCbContractsByChainId(chainId: number | ChainEnum) {
 			drifterDNACardAddress: "",
 			drifterDNACardSaleAddress: "",
 			drifterDNACardRevealAddress: "",
-			drifterDNACardOpened:"",
+			drifterDNACardClaimAddress: "",
 			drifterGearAddress:"",
 			drifterGearClaim:"",
 			drifterAddress: "",
@@ -60,7 +60,7 @@ export function getCbContractsByChainId(chainId: number | ChainEnum) {
 			drifterDNACardAddress: "",
 			drifterDNACardSaleAddress: "",
 			drifterDNACardRevealAddress: "",
-			drifterDNACardOpened:"",
+			drifterDNACardClaimAddress: "",
 			drifterGearAddress:"",
 			drifterGearClaim:"",
 			drifterAddress: "",
@@ -86,7 +86,7 @@ export function getCbContractsByChainId(chainId: number | ChainEnum) {
 			drifterDNACardAddress: "",
 			drifterDNACardSaleAddress: "",
 			drifterDNACardRevealAddress: "",
-			drifterDNACardOpened:"",
+			drifterDNACardClaimAddress: "",
 			drifterGearAddress:"",
 			drifterGearClaim:"",
 			drifterAddress: "",
@@ -107,15 +107,15 @@ export function getCbContractsByChainId(chainId: number | ChainEnum) {
 			versionBetaClaim: "",
 			cyberbrokersAccolades: "",
 			cyberbrokersAccoladesClaim: "",
-			drifterBioCanvasAddress: "0x1fA8cdc56CA4a55c0fD5C383179697F83D62C744",
-			drifterBioCanvasSaleAddress: "0x011ab9ECc2c424aC4114127E858BE994c83a8F76",
-			drifterDNACardAddress: "0xfd86aCbFedDd675883dE66Ff33feD2957F0696A5",
-			drifterDNACardSaleAddress: "0xf4a42633577D3c6c538cf12CcEB494302ca3d78E",
-			drifterDNACardRevealAddress: "0x8d7701F1Bcd2282eC1dDD5F303e91a01025046a4",
-			drifterDNACardOpened:"0x8241042c7eA003F3556cda92EBC493718771336A",
-			drifterGearAddress: "0x7af2ce37e89a42f75F4b4F026943b445D40c0C7F",
-			drifterGearClaim:"0xcc862F1677FB86c334C7cb40D56D935206137aEd",
-			drifterAddress: "0x55Ef3d4DC5658e20B5595C40Cf82c4b0cd31540B",
+			drifterBioCanvasAddress: "0x2d507e55D6947D818e22ECBF687147aB75937149",
+			drifterBioCanvasSaleAddress: "0x7306F71e233f53006055aD6093D8D1Eb638A7b9d",
+			drifterDNACardAddress: "0xAC6725E756826bE866AeAaDb376e2956a8F64BB5",
+			drifterDNACardSaleAddress: "0xdF342FF0481BC2B2D2EcD12B3B4213c00D12eA64",
+			drifterDNACardRevealAddress: "0xd4AA5a63103323ECaC15a7250377F59bE09f3Ed6",
+			drifterDNACardClaimAddress: "0x5a2B0AF8b01A1d7Be10a820123AE31b72C17c7f7",
+			drifterGearAddress: "0x5a289bDaE68dE5CF8978F2BeBB7881ed701b1aED",
+			drifterGearClaim:"0x38B682eabF34270b8BC213417915503843E6B3C8",
+			drifterAddress: "0x8c873aBEe45631d0a604763fc76D77E77Bf43213",
 		}
 	}else {
 		// eth network by default
@@ -139,7 +139,7 @@ export function getCbContractsByChainId(chainId: number | ChainEnum) {
 			drifterDNACardAddress: "",
 			drifterDNACardSaleAddress: "",
 			drifterDNACardRevealAddress: "",
-			drifterDNACardOpened:"",
+			drifterDNACardClaimAddress: "",
 			drifterGearAddress:"",
 			drifterGearClaim:"",
 			drifterAddress: "",
@@ -243,8 +243,8 @@ export const getABIByAddress = (address:string) => {
 		case baseSepoliaAddresses.drifterDNACardRevealAddress.toLowerCase():
 			return ABIS.dnaCardRevealAbi;
 		/* Drifter DNA card Opened Contract */
-		case baseAddresses.drifterDNACardOpened.toLowerCase():
-		case baseSepoliaAddresses.drifterDNACardOpened.toLowerCase():
+		case baseAddresses.drifterDNACardClaimAddress.toLowerCase():
+		case baseSepoliaAddresses.drifterDNACardClaimAddress.toLowerCase():
 			return ABIS.dnaCardOpenedAbi;
 		/* Drifter Gear Contract */
 		case baseAddresses.drifterGearAddress.toLowerCase():

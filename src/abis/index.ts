@@ -21,6 +21,7 @@ import accoladeClaimAbi from "./accoladeClaim";
 import drifterGearAbi from "./drifterGear";
 import drifterGearClaimAbi from "./drifterGearClaim";
 import drifterAbi from "./drifterAbi";
+import drifterDnaCardClaimAbi from "./drifterDnaCardClaim";
 export const ABIS = {
 	delegateAbi,
 	afterglowAbi,
@@ -43,6 +44,7 @@ export const ABIS = {
 	dnaCardOpenedAbi,
 	drifterGearAbi,
 	drifterGearClaimAbi,
+	drifterDnaCardClaimAbi,
 	drifterAbi,
 	dnaCardSaleAbi
 };
