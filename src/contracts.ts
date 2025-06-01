@@ -107,15 +107,15 @@ export function getCbContractsByChainId(chainId: number | ChainEnum) {
 			versionBetaClaim: "",
 			cyberbrokersAccolades: "",
 			cyberbrokersAccoladesClaim: "",
-			drifterBioCanvasAddress: "0x2d507e55D6947D818e22ECBF687147aB75937149",
-			drifterBioCanvasSaleAddress: "0x7306F71e233f53006055aD6093D8D1Eb638A7b9d",
-			drifterDNACardAddress: "0xAC6725E756826bE866AeAaDb376e2956a8F64BB5",
-			drifterDNACardSaleAddress: "0xdF342FF0481BC2B2D2EcD12B3B4213c00D12eA64",
-			drifterDNACardRevealAddress: "0xd4AA5a63103323ECaC15a7250377F59bE09f3Ed6",
-			drifterDNACardClaimAddress: "0x5a2B0AF8b01A1d7Be10a820123AE31b72C17c7f7",
-			drifterGearAddress: "0x5a289bDaE68dE5CF8978F2BeBB7881ed701b1aED",
-			drifterGearClaim:"0x38B682eabF34270b8BC213417915503843E6B3C8",
-			drifterAddress: "0x8c873aBEe45631d0a604763fc76D77E77Bf43213",
+			drifterBioCanvasAddress: "0x3c3629E5f589a2785782dF139DB878f6CE1BF3FF",
+			drifterBioCanvasSaleAddress: "0xea1e6f31B368eAA88D3ebF26ae0461d29d046AC2",
+			drifterDNACardAddress: "0x4ccb8D48D75Ee72c230434F0731566e2e36AfddF",
+			drifterDNACardSaleAddress: "0x6728cA53d809bC79Dd3ED76a6eAE05379dE37a6D",
+			drifterDNACardRevealAddress: "0x8A9ca71044AC86e4a7fd9c64C61f9d59F4B5717E",
+			drifterDNACardClaimAddress: "0x8A83b06f52dF748d5B53D940d608959b83d5EA26",
+			drifterGearAddress: "0x8b1Bb168b263fb20Ae31dBd49A5494f301Ab2ef5",
+			drifterGearClaim:"0xf0f49d09d5249b49b927DD38DdF57682469b7845",
+			drifterAddress: "0x28b0D038ff0D40ac19B9ce392443800c8bEF1289",
 		}
 	}else {
 		// eth network by default
@@ -245,7 +245,7 @@ export const getABIByAddress = (address:string) => {
 		/* Drifter DNA card Opened Contract */
 		case baseAddresses.drifterDNACardClaimAddress.toLowerCase():
 		case baseSepoliaAddresses.drifterDNACardClaimAddress.toLowerCase():
-			return ABIS.dnaCardOpenedAbi;
+			return ABIS.drifterDnaCardClaimAbi;
 		/* Drifter Gear Contract */
 		case baseAddresses.drifterGearAddress.toLowerCase():
 		case baseSepoliaAddresses.drifterGearAddress.toLowerCase():

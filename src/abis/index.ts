@@ -13,7 +13,6 @@ import bioCanvasAbi from "./drifterBioCanvas";
 import dnaCardAbi from "./drifterDnaCard";
 import dnaCardSaleAbi from "./drifterDnaCardSale";
 import dnaCardRevealAbi from "./drifterDnaCardReveal";
-import dnaCardOpenedAbi from "./drifterDnaCardOpened";
 import bioCanvasSaleAbi from "./drifterBioCanvasSale";
 import cyberbrokersMetadataAbi from "./cyberbrokerMetadata";
 import accoladeAbi from "./accolade";
@@ -41,7 +40,6 @@ export const ABIS = {
 	bioCanvasAbi,
 	bioCanvasSaleAbi,
 	dnaCardRevealAbi,
-	dnaCardOpenedAbi,
 	drifterGearAbi,
 	drifterGearClaimAbi,
 	drifterDnaCardClaimAbi,
