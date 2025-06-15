@@ -552,6 +552,13 @@ export default [
 				"type": "function"
 			},
 			{
+				"inputs": [],
+				"name": "updateRandomSeed",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
 				"stateMutability": "payable",
 				"type": "receive"
 			}
