@@ -85,11 +85,11 @@ export function getCbContractsByChainId(chainId: number | ChainEnum) {
 			drifterBioCanvasSaleAddress: "0xc2957001277eB0803754541330c44F98e53B3C67",
 			drifterDNACardAddress: "0x9FfAf75645C17132Cd12D3044C8cBb52d34677B9",
 			drifterDNACardSaleAddress: "0xe4209038917e964ef44aD62824396CF245346865",
-			drifterDNACardRevealAddress: "",
+			drifterDNACardRevealAddress: "0x744b315Ac6D646Be104331dDFF85171db596C4C2",
 			drifterDNACardClaimAddress: "0x94412724bF19dfe45681A8D763d2AFDcf86ba976",
-			drifterGearAddress:"",
-			drifterGearClaim:"",
-			drifterAddress: "",
+			drifterGearAddress:"0x5d46722d55B4c469776AD937ef43268192184CA0",
+			drifterGearClaim:"0xB9Ca6D132D0EB46c3a18f1857Bd8EC735cE1741C",
+			drifterAddress: "0x435ABB165C93aba7D4AC2250839337663BaB3833",
 		}
 	}  else if (chainId == ChainEnum.BASE_SEPOLIA) {
 		return {
