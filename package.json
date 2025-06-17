@@ -1,6 +1,6 @@
 {
   "name": "@cyberbrokers/eth-utils",
-  "version": "0.0.55",
+  "version": "0.0.56",
   "description": "",
   "main": "index.js",
   "lib": "index.d.ts",
