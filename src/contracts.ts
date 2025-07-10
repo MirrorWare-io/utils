@@ -1,6 +1,6 @@
 import { Contract, Signer, BrowserProvider, JsonRpcProvider, AlchemyProvider, InfuraProvider } from "ethers";
 import delegateAbi from "./abis/delegateAbi";
-import {config} from "./config";
+import {config, getKeyByChain} from "./config";
 import { delegateTuple, delegateV2Tuple } from "./types";
 import { ChainEnum } from "./chains";
 import { ABIS } from "./abis";
@@ -284,8 +284,7 @@ export const getABIByAddress = (address:string) => {
  * @internal
  */
 export function getDelegateContract(chainId: number | ChainEnum) {
-	const key =
-	config.infura.key || (chainId == 5 ? config.alchemy.goerli_key : chainId == 11155111? config.alchemy.sepolia_key : config.alchemy.eth_key);
+	const key = getKeyByChain(chainId);
 	if (!key) throw new Error("getDelegateContract: Please set alchemy.goerli_key, sepolia_key or/and alchemy.eth_key in configs. Chain : "+ chainId);
 	const ProviderClass = config.infura.key ? InfuraProvider : AlchemyProvider;
 	if (!ProviderClass) throw new Error("getDelegateContract: No provider found");
@@ -302,8 +301,7 @@ export function getDelegateContract(chainId: number | ChainEnum) {
  * @internal
  */
 export function getDelegateV2Contract(chainId: number | ChainEnum) {
-	const key =
-		config.infura.key || (chainId == 5 ? config.alchemy.goerli_key : chainId == 11155111? config.alchemy.sepolia_key : config.alchemy.eth_key);
+	const key = getKeyByChain(chainId);
 	if (!key) throw new Error("getDelegateContract: Please set alchemy.goerli_key, sepolia_key or/and alchemy.eth_key in configs. Chain : "+ chainId);;
 	const ProviderClass = config.infura.key ? InfuraProvider : AlchemyProvider;
 	if (!ProviderClass) throw new Error("getDelegateContract: No provider found");
